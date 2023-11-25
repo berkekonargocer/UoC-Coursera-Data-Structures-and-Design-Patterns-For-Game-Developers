@@ -90,17 +90,15 @@ public class Collector : MonoBehaviour
     void HandlePickupSpawnedEvent(GameObject pickupObject) {
 	    targets.Add(new Target(pickupObject, transform.position));
 	    
-	    float targetPickupDistance;
+	    float targetPickupDistance = Mathf.Infinity;
+	    
 	    if (targetPickup != null)
 	    {
 		    targetPickupDistance = Vector3.Distance(
 			    targetPickup.GameObject.transform.position, transform.position);
 	    }
-	    else
-	    {
-		    targetPickupDistance = float.MaxValue;
-	    }
-	    if (targets[^1].Distance < targetPickupDistance)
+
+	    if (targets.Count > 0 && targets[^1].Distance < targetPickupDistance)
 	    {
 		    SetTarget(targets[^1]);
 	    }
