@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A collecting game object
@@ -85,7 +83,7 @@ public class Collector : MonoBehaviour
     /// Starts the teddy bear moving toward the target pickup
     /// </summary>
     void GoToTargetPickup() {
-        if (targetPickup == null && targetPickupObject == null)
+        if (targetPickupObject == null)
             return;
 
         Vector3 targetPosition = targetPickupObject.transform.position;
