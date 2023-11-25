@@ -86,7 +86,7 @@ public class SortedList<T> where T:IComparable
     /// <param name="index">index</param>
     public void RemoveAt(int index)
     {
-        // add your implementation below
+        items.RemoveAt(index);
     }
 
     /// <summary>

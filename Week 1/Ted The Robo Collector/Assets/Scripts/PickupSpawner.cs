@@ -15,7 +15,9 @@ public class PickupSpawner : MonoBehaviour
 	// spawn control
     const float SpawnDelay = 0.3f;
 	Timer spawnTimer;
-    const int MaxNumPickups = 20;
+	const int MaxNumPickups = 20;
+	const int TotalNumPickups = 50;
+	int numPickupsSpawned = 0;
 
 	// spawn location support
     Vector3 location = Vector3.zero;
@@ -88,7 +90,12 @@ public class PickupSpawner : MonoBehaviour
         {
 			SpawnPickup();
 		}
-        spawnTimer.Run();
+		
+		// don't start the timer if we've spawned all the pickups
+		if (numPickupsSpawned < TotalNumPickups)
+		{
+			spawnTimer.Run();
+		}
 	}
 
 	/// <summary>
@@ -120,6 +127,9 @@ public class PickupSpawner : MonoBehaviour
             GameObject pickup = Instantiate<GameObject>(prefabPickup,
                                     location, Quaternion.identity);
             pickupSpawnedEvent.Invoke(pickup);
+            
+            // increment total pickups count
+            numPickupsSpawned++;
 		}
 	}
 

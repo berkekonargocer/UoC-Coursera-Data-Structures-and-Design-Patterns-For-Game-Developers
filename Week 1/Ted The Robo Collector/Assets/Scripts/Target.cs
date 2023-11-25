@@ -55,9 +55,8 @@ public class Target : IComparable
     /// the given position
     /// </summary>
     /// <param name="position">position for distance calculation</param>
-    void UpdateDistance(Vector3 position) {
-        distance = Vector3.Distance(gameObject.transform.position,
-            position);
+    public void UpdateDistance(Vector3 position) {
+        distance = Vector3.Distance(gameObject.transform.position, position);
     }
 
     /// <summary>
