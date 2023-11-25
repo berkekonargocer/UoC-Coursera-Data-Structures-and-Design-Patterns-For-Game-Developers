@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -23,8 +21,7 @@ public class Target : IComparable
     /// </summary>
     /// <param name="gameObject">target game object</param>
     /// <param name="position">collector position</param>
-    public Target(GameObject gameObject, Vector3 position)
-    {
+    public Target(GameObject gameObject, Vector3 position) {
         this.gameObject = gameObject;
         UpdateDistance(position);
     }
@@ -37,20 +34,18 @@ public class Target : IComparable
     /// Gets the target game object
     /// </summary>
     /// <value>target game object</value>
-    public GameObject GameObject
-    {
+    public GameObject GameObject {
         get { return gameObject; }
     }
-	
+
     /// <summary>
     /// Gets the distance for the target
     /// </summary>
     /// <value>distance</value>
-    public float Distance
-    {
+    public float Distance {
         get { return distance; }
     }
-	
+
     #endregion
 
     #region Public methods
@@ -60,10 +55,8 @@ public class Target : IComparable
     /// the given position
     /// </summary>
     /// <param name="position">position for distance calculation</param>
-    public void UpdateDistance(Vector3 position)
-    {
-        distance = Vector3.Distance(gameObject.transform.position,
-            position);
+    public void UpdateDistance(Vector3 position) {
+        distance = Vector3.Distance(gameObject.transform.position, position);
     }
 
     /// <summary>
@@ -73,21 +66,32 @@ public class Target : IComparable
     /// as the other object.
     /// </summary>
     /// <returns>relative order of this instance and object</returns>
-    /// <param name="obj">object to compare to</param>
-    public int CompareTo(object obj)
-    {
-        // replace the code below with your implementation
-        return 0;
+    /// <param name="otherObject">object to compare to</param>
+    public int CompareTo(object otherObject) {
+        if (otherObject == null)
+        {
+            return 1;
+        }
+
+        Target otherTarget = otherObject as Target;
+        if (otherTarget == null)
+            return 1;
+
+        if (otherTarget.distance < distance)
+        {
+            return -1;
+        }
+
+        return otherTarget.distance == distance ? 0 : 1;
     }
-	
+
     /// <summary>
     /// Converts the target to a string
     /// </summary>
     /// <returns>the string for the target</returns>
-    public override string ToString()
-    {
+    public override string ToString() {
         return distance.ToString();
     }
-	
+
     #endregion
 }

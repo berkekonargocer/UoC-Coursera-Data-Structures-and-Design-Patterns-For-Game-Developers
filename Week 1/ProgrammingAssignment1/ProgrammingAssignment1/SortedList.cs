@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 /// <summary>
 /// A sorted list
@@ -57,7 +55,27 @@ public class SortedList<T> where T:IComparable
     /// <param name="item">item</param>
     public void Add(T item)
     {
-        // add your implementation below
+        int addLocation = 0;
+        
+        while (addLocation < items.Count && items[addLocation].CompareTo(item) < 0)
+        {
+            addLocation++;
+        }
+        
+        tempList.Clear();
+        for (int i = 0; i < addLocation; i++)
+        {
+            tempList.Add(items[i]);
+        }
+        
+        tempList.Add(item);
+        for (int i = addLocation; i < items.Count; i++)
+        {
+            tempList.Add(items[i]);
+        }
+        
+        items.Clear();
+        items.AddRange(tempList);
     }
 
     /// <summary>
@@ -66,7 +84,7 @@ public class SortedList<T> where T:IComparable
     /// <param name="index">index</param>
     public void RemoveAt(int index)
     {
-        // add your implementation below
+        items.RemoveAt(index);
     }
 
     /// <summary>
