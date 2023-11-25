@@ -61,36 +61,49 @@ public class Collector : MonoBehaviour
 
 		}
 	}
-
-    /*
-	/// <summary>
+    
+    /// <summary>
+    /// Starts the teddy bear moving toward the target pickup
+    /// </summary>
+    void GoToTargetPickup()
+    {
+	    // calculate direction to target pickup and start moving toward it
+	    Vector2 direction = new Vector2(
+		    targetPickup.GameObject.transform.position.x - transform.position.x,
+		    targetPickup.GameObject.transform.position.y - transform.position.y);
+	    direction.Normalize();
+	    rb2d.velocity = Vector2.zero;
+	    rb2d.AddForce(direction * BaseImpulseForceMagnitude, 
+		    ForceMode2D.Impulse);
+    }
+    
+    /// <summary>
 	/// Sets the target pickup to the provided pickup
 	/// </summary>
 	/// <param name="pickup">Pickup.</param>
-	void SetTarget(GameObject pickup)
+	void SetTarget(Target pickup)
     {
 		targetPickup = pickup;
 		GoToTargetPickup();
 	}
 
-	/// <summary>
-	/// Starts the teddy bear moving toward the target pickup
-	/// </summary>
-	void GoToTargetPickup()
-    {
-        // calculate direction to target pickup and start moving toward it
-		Vector2 direction = new Vector2(
-			targetPickup.transform.position.x - transform.position.x,
-			targetPickup.transform.position.y - transform.position.y);
-		direction.Normalize();
-		rb2d.velocity = Vector2.zero;
-		rb2d.AddForce(direction * BaseImpulseForceMagnitude, 
-			ForceMode2D.Impulse);
-	}
-	*/
-
     void HandlePickupSpawnedEvent(GameObject pickupObject) {
 	    targets.Add(new Target(pickupObject, transform.position));
+	    
+	    float targetPickupDistance;
+	    if (targetPickup != null)
+	    {
+		    targetPickupDistance = Vector3.Distance(
+			    targetPickup.GameObject.transform.position, transform.position);
+	    }
+	    else
+	    {
+		    targetPickupDistance = float.MaxValue;
+	    }
+	    if (targets[^1].Distance < targetPickupDistance)
+	    {
+		    SetTarget(targets[^1]);
+	    }
     }
 	
 	#endregion

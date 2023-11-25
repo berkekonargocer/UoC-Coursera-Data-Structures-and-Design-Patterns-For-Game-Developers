@@ -31,7 +31,7 @@ public class SortedList<T> where T:IComparable
     /// Gets the number of items in the list
     /// </summary>
     /// <value>number of items in the list</value>
-    int Count
+    public int Count
     {
         get { return items.Count; }
     }
