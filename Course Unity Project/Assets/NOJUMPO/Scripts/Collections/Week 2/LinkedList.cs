@@ -19,22 +19,22 @@ namespace Nojumpo.Collections
         public abstract void Add(T item);
 
         public void Clear() {
-            if (_head != null)
+            if (_head == null)
+                return;
+
+            LinkedListNode<T> previousNode = _head;
+            LinkedListNode<T> currentNode = _head.Next;
+            previousNode.Next = null;
+
+            while (currentNode != null)
             {
-                LinkedListNode<T> previousNode = _head;
-                LinkedListNode<T> currentNode = _head.Next;
+                previousNode = currentNode;
+                currentNode = currentNode.Next;
                 previousNode.Next = null;
-
-                while (currentNode != null)
-                {
-                    previousNode = currentNode;
-                    currentNode = currentNode.Next;
-                    previousNode.Next = null;
-                }
-
-                _head = null;
-                _count = 0;
             }
+
+            _head = null;
+            _count = 0;
         }
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
