@@ -37,6 +37,40 @@ namespace Nojumpo.Collections
             _count = 0;
         }
 
+        public bool Remove(T item) {
+            if (_head == null)
+            {
+                return false;
+            }
+
+            if (_head.Value.Equals(item))
+            {
+                _head = _head.Next;
+                _count--;
+
+                return true;
+            }
+
+            LinkedListNode<T> previousNode = _head;
+            LinkedListNode<T> currentNode = _head.Next;
+
+            while (currentNode != null && !currentNode.Value.Equals(item))
+            {
+                previousNode = currentNode;
+                currentNode = currentNode.Next;
+            }
+
+            if (currentNode == null)
+            {
+                return false;
+            }
+
+            previousNode.Next = currentNode.Next;
+            _count--;
+
+            return true;
+        }
+
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
