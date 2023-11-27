@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Nojumpo.Collections
 {
     public abstract class LinkedList<T>
@@ -80,6 +82,29 @@ namespace Nojumpo.Collections
             }
 
             return currentNode;
+        }
+
+        public override string ToString() {
+            StringBuilder builder = new StringBuilder();
+            LinkedListNode<T> currentNode = _head;
+
+            int nodeCount = 0;
+
+            while (currentNode != null)
+            {
+                nodeCount++;
+                
+                builder.Append(currentNode.Value);
+                
+                if (nodeCount < _count)
+                {
+                    builder.Append(",");
+                }
+                
+                currentNode = currentNode.Next;
+            }
+
+            return builder.ToString();
         }
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
