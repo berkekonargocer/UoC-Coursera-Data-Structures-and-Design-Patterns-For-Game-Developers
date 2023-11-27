@@ -71,6 +71,17 @@ namespace Nojumpo.Collections
             return true;
         }
 
+        public LinkedListNode<T> Find(T item) {
+            LinkedListNode<T> currentNode = _head;
+
+            while (currentNode != null && !currentNode.Value.Equals(item))
+            {
+                currentNode = currentNode.Next;
+            }
+
+            return currentNode;
+        }
+
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
