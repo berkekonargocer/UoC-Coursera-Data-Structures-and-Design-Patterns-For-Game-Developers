@@ -10,7 +10,8 @@ namespace Nojumpo.Collections
             }
             else
             {
-                _head = new LinkedListNode<T>(item, null,_head);
+                _head.Previous = new LinkedListNode<T>(item, null,_head);
+                _head = _head.Previous;
             }
 
             _count++;

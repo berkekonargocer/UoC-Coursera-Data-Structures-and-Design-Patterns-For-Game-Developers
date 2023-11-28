@@ -12,12 +12,13 @@ namespace Nojumpo.Collections
             }
             else if (_head.Value.CompareTo(item) > 0)
             {
-                _head = new LinkedListNode<T>(item, null, _head);
+                _head.Previous = new LinkedListNode<T>(item, null, _head);
+                _head = _head.Previous;
             }
             else
             {
-                LinkedListNode<T> previousNode = null;
-                LinkedListNode<T> currentNode = _head;
+                LinkedListNode<T> previousNode = _head;
+                LinkedListNode<T> currentNode = _head.Next;
 
                 while (currentNode != null && currentNode.Value.CompareTo(item) < 0)
                 {
@@ -25,7 +26,15 @@ namespace Nojumpo.Collections
                     currentNode = currentNode.Next;
                 }
 
-                previousNode.Next = new LinkedListNode<T>(item, previousNode, currentNode);
+                if (currentNode == null)
+                {
+                    previousNode.Next = new LinkedListNode<T>(item, previousNode, null);
+                }
+                else
+                {
+                    previousNode.Next = new LinkedListNode<T>(item, previousNode, currentNode);
+                    currentNode.Previous = previousNode.Next;
+                }
             }
 
             _count++;
