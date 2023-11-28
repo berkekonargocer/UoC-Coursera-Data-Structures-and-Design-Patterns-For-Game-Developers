@@ -8,11 +8,11 @@ namespace Nojumpo.Collections
         public override void Add(T item) {
             if (_head == null)
             {
-                _head = new LinkedListNode<T>(item, null);
+                _head = new LinkedListNode<T>(item, null, null);
             }
             else if (_head.Value.CompareTo(item) > 0)
             {
-                _head = new LinkedListNode<T>(item, _head);
+                _head = new LinkedListNode<T>(item, null, _head);
             }
             else
             {
@@ -25,7 +25,7 @@ namespace Nojumpo.Collections
                     currentNode = currentNode.Next;
                 }
 
-                previousNode.Next = new LinkedListNode<T>(item, currentNode);
+                previousNode.Next = new LinkedListNode<T>(item, previousNode, currentNode);
             }
 
             _count++;
