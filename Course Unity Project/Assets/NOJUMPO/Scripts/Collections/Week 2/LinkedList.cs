@@ -33,6 +33,7 @@ namespace Nojumpo.Collections
                 previousNode = currentNode;
                 currentNode = currentNode.Next;
                 previousNode.Next = null;
+                previousNode.Previous = null;
             }
 
             _head = null;
@@ -47,18 +48,20 @@ namespace Nojumpo.Collections
 
             if (_head.Value.Equals(item))
             {
+                if (_head.Next != null)
+                {
+                    _head.Next.Previous = null;
+                }
                 _head = _head.Next;
                 _count--;
 
                 return true;
             }
-
-            LinkedListNode<T> previousNode = _head;
+            
             LinkedListNode<T> currentNode = _head.Next;
 
             while (currentNode != null && !currentNode.Value.Equals(item))
             {
-                previousNode = currentNode;
                 currentNode = currentNode.Next;
             }
 
@@ -67,7 +70,10 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            previousNode.Next = currentNode.Next;
+            if (currentNode.Previous.Next != null)
+            {
+                currentNode.Previous.Next.Previous = currentNode.Previous;
+            }
             _count--;
 
             return true;
