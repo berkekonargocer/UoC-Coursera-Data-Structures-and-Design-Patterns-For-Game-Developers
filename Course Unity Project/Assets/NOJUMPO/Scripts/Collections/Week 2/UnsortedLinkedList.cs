@@ -2,12 +2,6 @@ namespace Nojumpo.Collections
 {
     public class UnsortedLinkedList<T> : LinkedList<T>
     {
-        // -------------------------------- FIELDS ---------------------------------
-
-
-        // ----------------------------- CONSTRUCTORS ------------------------------
-
-
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public override void Add(T item) {
             if (_head == null)
@@ -21,10 +15,5 @@ namespace Nojumpo.Collections
 
             _count++;
         }
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
-
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
     }
 }
