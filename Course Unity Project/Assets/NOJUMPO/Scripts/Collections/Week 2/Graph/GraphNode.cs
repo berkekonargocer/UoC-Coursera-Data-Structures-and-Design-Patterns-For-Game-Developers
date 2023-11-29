@@ -24,7 +24,7 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveNeighbor(GraphNode<T> neighbor) {
-            throw new NotImplementedException();
+            return _neighbors.Remove(neighbor);
         }
 
         public bool RemoveAllNeighbors() {
