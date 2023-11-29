@@ -5,11 +5,14 @@ namespace Nojumpo.Collections
     public class GraphNode<T>
     {
         // -------------------------------- FIELDS ---------------------------------
-        T value;
-        List<GraphNode<T>> neighbors;
+        T _value;
+        List<GraphNode<T>> _neighbors;
 
         // ----------------------------- CONSTRUCTORS ------------------------------
-
+        public GraphNode(T value) {
+            _value = value;
+            _neighbors = new List<GraphNode<T>>();
+        }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
 
