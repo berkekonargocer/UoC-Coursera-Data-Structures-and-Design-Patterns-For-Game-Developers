@@ -28,7 +28,12 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveAllNeighbors() {
-            throw new NotImplementedException();
+            for (int i = _neighbors.Count; i >= 0 ; i--)
+            {
+                _neighbors.RemoveAt(i);
+            }
+
+            return true;
         }
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
