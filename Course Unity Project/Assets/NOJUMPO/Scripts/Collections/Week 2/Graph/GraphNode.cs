@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Nojumpo.Collections
@@ -18,7 +19,17 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        public bool AddNeighbor(GraphNode<T> neighbor) {
+            throw new NotImplementedException();
+        }
 
+        public bool RemoveNeighbor(GraphNode<T> neighbor) {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveAllNeighbors() {
+            throw new NotImplementedException();
+        }
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
