@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Nojumpo.Collections
@@ -16,13 +15,5 @@ namespace Nojumpo.Collections
         public Graph() {
                 
         }
-
-        // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
-
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
     }
 }
