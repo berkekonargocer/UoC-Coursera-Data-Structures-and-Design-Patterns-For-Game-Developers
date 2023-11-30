@@ -28,6 +28,16 @@ namespace Nojumpo.Collections
             return null;
         }
 
+        public bool AddNode(T value) {
+            if (Find(value) != null)
+            {
+                return false;
+            }
+            
+            nodes.Add(new GraphNode<T>(value));
+            return true;
+        }
+        
         public void Clear() {
             foreach (GraphNode<T> graphNode in nodes)
             {
