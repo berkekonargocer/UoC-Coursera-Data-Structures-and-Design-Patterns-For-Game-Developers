@@ -33,7 +33,7 @@ namespace Nojumpo.Collections
             {
                 return false;
             }
-            
+
             nodes.Add(new GraphNode<T>(value));
             return true;
         }
@@ -56,7 +56,25 @@ namespace Nojumpo.Collections
             node2.AddNeighbor(node1);
             return true;
         }
-        
+
+        public bool RemoveNode(T value) {
+            GraphNode<T> nodeToRemove = FindNode(value);
+
+            if (nodeToRemove == null)
+            {
+                return false;
+            }
+
+            nodes.Remove(nodeToRemove);
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].RemoveNeighbor(nodeToRemove);
+            }
+
+            return true;
+        }
+
         public void Clear() {
             foreach (GraphNode<T> graphNode in nodes)
             {
