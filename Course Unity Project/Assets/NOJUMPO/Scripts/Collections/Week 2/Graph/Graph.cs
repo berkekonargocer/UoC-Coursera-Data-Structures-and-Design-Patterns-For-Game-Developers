@@ -6,17 +6,28 @@ namespace Nojumpo.Collections
     {
         // -------------------------------- FIELDS ---------------------------------
         public IList<GraphNode<T>> Nodes { get { return nodes.AsReadOnly(); } }
-        public int Count { get { return nodes.Count;} }
+        public int Count { get { return nodes.Count; } }
 
         List<GraphNode<T>> nodes = new List<GraphNode<T>>();
-        
-        
+
+
         // ----------------------------- CONSTRUCTORS ------------------------------
         public Graph() {
-                
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        public GraphNode<T> Find(T value) {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].Value.Equals(value))
+                {
+                    return nodes[i];
+                }
+            }
+
+            return null;
+        }
+
         public void Clear() {
             foreach (GraphNode<T> graphNode in nodes)
             {
