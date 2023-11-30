@@ -16,7 +16,7 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        public GraphNode<T> Find(T value) {
+        public GraphNode<T> FindNode(T value) {
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (nodes[i].Value.Equals(value))
@@ -29,12 +29,31 @@ namespace Nojumpo.Collections
         }
 
         public bool AddNode(T value) {
-            if (Find(value) != null)
+            if (FindNode(value) != null)
             {
                 return false;
             }
             
             nodes.Add(new GraphNode<T>(value));
+            return true;
+        }
+
+        public bool AddEdge(T value1, T value2) {
+            GraphNode<T> node1 = FindNode(value1);
+            GraphNode<T> node2 = FindNode(value2);
+
+            if (node1 == null || node2 == null)
+            {
+                return false;
+            }
+
+            if (node1.Neighbors.Contains(node2))
+            {
+                return false;
+            }
+
+            node1.AddNeighbor(node2);
+            node2.AddNeighbor(node1);
             return true;
         }
         
