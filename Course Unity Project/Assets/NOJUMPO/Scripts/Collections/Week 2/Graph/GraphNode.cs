@@ -20,7 +20,13 @@ namespace Nojumpo.Collections
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public bool AddNeighbor(GraphNode<T> neighbor) {
-            throw new NotImplementedException();
+            if (_neighbors.Contains(neighbor))
+            {
+                return false;
+            }
+
+            _neighbors.Add(neighbor);
+            return true;
         }
 
         public bool RemoveNeighbor(GraphNode<T> neighbor) {
@@ -28,7 +34,7 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveAllNeighbors() {
-            for (int i = _neighbors.Count; i >= 0 ; i--)
+            for (int i = _neighbors.Count; i >= 0; i--)
             {
                 _neighbors.RemoveAt(i);
             }
