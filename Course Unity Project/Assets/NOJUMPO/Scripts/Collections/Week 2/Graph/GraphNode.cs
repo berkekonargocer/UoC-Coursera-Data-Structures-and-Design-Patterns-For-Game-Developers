@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Nojumpo.Collections
 {
@@ -42,9 +42,22 @@ namespace Nojumpo.Collections
             return true;
         }
 
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
+        public override string ToString() {
+            StringBuilder nodeString = new StringBuilder();
+            nodeString.Append($"[Node Value:{_value} Neighbors: ");
 
+            for (int i = 0; i < _neighbors.Count; i++)
+            {
+                nodeString.Append($"{_neighbors[i]._value}");
 
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+                if (_neighbors.Count > i + 1)
+                {
+                    nodeString.Append(", ");
+                }
+            }
+
+            nodeString.Append("]");
+            return nodeString.ToString();
+        }
     }
 }
