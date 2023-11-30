@@ -112,10 +112,5 @@ namespace Nojumpo.Collections
 
             return builder.ToString();
         }
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
-
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
     }
 }
