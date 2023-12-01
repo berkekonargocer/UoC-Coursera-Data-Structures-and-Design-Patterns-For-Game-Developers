@@ -50,7 +50,7 @@ namespace Nojumpo.Collections
             {
                 nodeString.Append($"{_neighbors[i]._value}");
 
-                if (_neighbors.Count > i + 1)
+                if (i < _neighbors.Count - 1)
                 {
                     nodeString.Append(", ");
                 }

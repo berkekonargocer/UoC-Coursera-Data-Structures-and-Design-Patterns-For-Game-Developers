@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace Nojumpo.Collections
 {
@@ -104,6 +105,22 @@ namespace Nojumpo.Collections
             {
                 nodes.RemoveAt(i);
             }
+        }
+
+        public override string ToString() {
+            StringBuilder graphStringBuilder = new StringBuilder();
+
+            for (int i = 0; i < Count; i++)
+            {
+                graphStringBuilder.Append(nodes[i]);
+
+                if (i < Count - 1)
+                {
+                    graphStringBuilder.Append(",");
+                }
+            }
+
+            return graphStringBuilder.ToString();
         }
     }
 }
