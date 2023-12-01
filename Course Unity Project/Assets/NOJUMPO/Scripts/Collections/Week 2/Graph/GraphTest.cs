@@ -6,20 +6,23 @@ namespace Nojumpo
     public class GraphTest : MonoBehaviour
     {
         // -------------------------------- FIELDS ---------------------------------
-        Graph<int> intGraph = new Graph<int>();
+        readonly Graph<int> _intGraph = new Graph<int>();
 
+        
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
-            intGraph.AddNode(9);
-            intGraph.AddNode(5);
-            intGraph.AddNode(3);
-            intGraph.AddEdge(9, 5);
-            intGraph.AddEdge(9, 3);
-            intGraph.AddEdge(5, 3);
+            _intGraph.AddNode(9);
+            _intGraph.AddNode(5);
+            _intGraph.AddNode(3);
+            _intGraph.AddEdge(9, 5);
+            _intGraph.AddEdge(9, 3);
+            _intGraph.AddEdge(5, 3);
         }
 
         void Start() {
-            Debug.Log($"{intGraph}");
+            Debug.Log($"{_intGraph}");
+            _intGraph.RemoveNode(5);
+            Debug.Log($"{_intGraph}");
         }
     }
 }
