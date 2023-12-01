@@ -75,6 +75,25 @@ namespace Nojumpo.Collections
             return true;
         }
 
+        public bool RemoveEdge(T value1, T value2) {
+            GraphNode<T> node1 = FindNode(value1);
+            GraphNode<T> node2 = FindNode(value2);
+
+            if (node1 == null || node2 == null)
+            {
+                return false;
+            }
+
+            if (!node1.Neighbors.Contains(node2))
+            {
+                return false;
+            }
+
+            node1.RemoveNeighbor(node2);
+            node2.RemoveNeighbor(node1);
+            return true;
+        }
+
         public void Clear() {
             foreach (GraphNode<T> graphNode in nodes)
             {
