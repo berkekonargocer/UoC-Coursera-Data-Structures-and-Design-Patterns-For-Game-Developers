@@ -17,10 +17,10 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        public GraphNode<T> FindNode(T value) {
+        public GraphNode<T> FindNode(T nodeValue) {
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (nodes[i].Value.Equals(value))
+                if (nodes[i].Value.Equals(nodeValue))
                 {
                     return nodes[i];
                 }
@@ -29,19 +29,25 @@ namespace Nojumpo.Collections
             return null;
         }
 
-        public bool AddNode(T value) {
-            if (FindNode(value) != null)
+        public bool AddNode(T nodeValue) {
+            if (FindNode(nodeValue) != null)
             {
                 return false;
             }
 
-            nodes.Add(new GraphNode<T>(value));
+            nodes.Add(new GraphNode<T>(nodeValue));
             return true;
         }
 
-        public bool AddEdge(T value1, T value2) {
-            GraphNode<T> node1 = FindNode(value1);
-            GraphNode<T> node2 = FindNode(value2);
+        /// <summary>
+        /// Add an edge from value1 to value2
+        /// </summary>
+        /// <param name="node1Value"></param>
+        /// <param name="node2Value"></param>
+        /// <returns></returns>
+        public bool AddEdge(T node1Value, T node2Value) {
+            GraphNode<T> node1 = FindNode(node1Value);
+            GraphNode<T> node2 = FindNode(node2Value);
 
             if (node1 == null || node2 == null)
             {
@@ -54,12 +60,11 @@ namespace Nojumpo.Collections
             }
 
             node1.AddNeighbor(node2);
-            node2.AddNeighbor(node1);
             return true;
         }
 
-        public bool RemoveNode(T value) {
-            GraphNode<T> nodeToRemove = FindNode(value);
+        public bool RemoveNode(T nodeValue) {
+            GraphNode<T> nodeToRemove = FindNode(nodeValue);
 
             if (nodeToRemove == null)
             {
@@ -76,9 +81,9 @@ namespace Nojumpo.Collections
             return true;
         }
 
-        public bool RemoveEdge(T value1, T value2) {
-            GraphNode<T> node1 = FindNode(value1);
-            GraphNode<T> node2 = FindNode(value2);
+        public bool RemoveEdge(T node1Value, T node2Value) {
+            GraphNode<T> node1 = FindNode(node1Value);
+            GraphNode<T> node2 = FindNode(node2Value);
 
             if (node1 == null || node2 == null)
             {
@@ -91,7 +96,6 @@ namespace Nojumpo.Collections
             }
 
             node1.RemoveNeighbor(node2);
-            node2.RemoveNeighbor(node1);
             return true;
         }
 
