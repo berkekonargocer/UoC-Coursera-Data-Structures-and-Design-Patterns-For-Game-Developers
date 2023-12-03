@@ -11,12 +11,17 @@ namespace Nojumpo
         
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
-            _intGraph.AddNode(9);
-            _intGraph.AddNode(5);
-            _intGraph.AddNode(3);
+            _intGraph.AddNode(9, 5);
+            _intGraph.AddNode(5, 3);
+            _intGraph.AddNode(3, 14);
+            _intGraph.AddNode(6, 7);
+            _intGraph.AddNode(4, 2);
             _intGraph.AddEdge(9, 5);
             _intGraph.AddEdge(9, 3);
+            _intGraph.AddEdge(9, 6);
+            _intGraph.AddEdge(9, 4);
             _intGraph.AddEdge(5, 3);
+            _intGraph.AddEdge(5, 4);
         }
 
         void Start() {

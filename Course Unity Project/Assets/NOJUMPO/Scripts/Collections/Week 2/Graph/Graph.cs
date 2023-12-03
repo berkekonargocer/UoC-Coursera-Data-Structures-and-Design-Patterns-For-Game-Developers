@@ -29,22 +29,16 @@ namespace Nojumpo.Collections
             return null;
         }
 
-        public bool AddNode(T nodeValue) {
+        public bool AddNode(T nodeValue, int weight) {
             if (FindNode(nodeValue) != null)
             {
                 return false;
             }
 
-            nodes.Add(new GraphNode<T>(nodeValue));
+            nodes.Add(new GraphNode<T>(nodeValue, weight));
             return true;
         }
-
-        /// <summary>
-        /// Add an edge from value1 to value2
-        /// </summary>
-        /// <param name="node1Value"></param>
-        /// <param name="node2Value"></param>
-        /// <returns></returns>
+        
         public bool AddEdge(T node1Value, T node2Value) {
             GraphNode<T> node1 = FindNode(node1Value);
             GraphNode<T> node2 = FindNode(node2Value);
@@ -54,7 +48,7 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            if (node1.Neighbors.Contains(node2))
+            if (node1.Neighbors.ContainsKey(node2))
             {
                 return false;
             }
@@ -90,7 +84,7 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            if (!node1.Neighbors.Contains(node2))
+            if (!node1.Neighbors.ContainsKey(node2))
             {
                 return false;
             }
@@ -120,7 +114,7 @@ namespace Nojumpo.Collections
 
                 if (i < Count - 1)
                 {
-                    graphStringBuilder.Append(",");
+                    graphStringBuilder.Append(", ");
                 }
             }
 

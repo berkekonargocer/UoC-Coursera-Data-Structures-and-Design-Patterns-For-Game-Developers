@@ -7,25 +7,28 @@ namespace Nojumpo.Collections
     {
         // -------------------------------- FIELDS ---------------------------------
         public T Value { get { return _value; } }
-        public IList<GraphNode<T>> Neighbors { get { return _neighbors.AsReadOnly(); } }
+        public int Weight { get { return _weight; } }
+        public IDictionary<GraphNode<T>, int> Neighbors { get { return _neighbors; } }
 
         T _value;
-        List<GraphNode<T>> _neighbors;
+        int _weight;
+        Dictionary<GraphNode<T>, int> _neighbors;
 
         // ----------------------------- CONSTRUCTORS ------------------------------
-        public GraphNode(T value) {
+        public GraphNode(T value, int weight) {
             _value = value;
-            _neighbors = new List<GraphNode<T>>();
+            _weight = weight;
+            _neighbors = new Dictionary<GraphNode<T>, int>();
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public bool AddNeighbor(GraphNode<T> neighbor) {
-            if (_neighbors.Contains(neighbor))
+            if (_neighbors.ContainsKey(neighbor))
             {
                 return false;
             }
 
-            _neighbors.Add(neighbor);
+            _neighbors.Add(neighbor, neighbor.Weight);
             return true;
         }
 
@@ -34,9 +37,9 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveAllNeighbors() {
-            for (int i = _neighbors.Count; i >= 0; i--)
+            foreach (KeyValuePair<GraphNode<T>, int> keyValuePair in _neighbors)
             {
-                _neighbors.RemoveAt(i);
+                _neighbors.Remove(keyValuePair.Key);
             }
 
             return true;
@@ -44,19 +47,21 @@ namespace Nojumpo.Collections
 
         public override string ToString() {
             StringBuilder nodeString = new StringBuilder();
-            nodeString.Append($"[Node Value:{_value} Neighbors: ");
+            nodeString.Append($"[Node Value: {_value}, Node Weight: {_weight} Neighbors: ");
 
-            for (int i = 0; i < _neighbors.Count; i++)
+            int iteration = -1;
+            foreach (KeyValuePair<GraphNode<T>, int> keyValuePair in _neighbors)
             {
-                nodeString.Append($"{_neighbors[i]._value}");
+                iteration++;
+                nodeString.Append($"(Value: {keyValuePair.Key.Value}, Weight: {keyValuePair.Key.Weight})");
 
-                if (i < _neighbors.Count - 1)
+                if (iteration < _neighbors.Count - 1)
                 {
                     nodeString.Append(", ");
                 }
             }
 
-            nodeString.Append("]");
+            nodeString.Append("] \n");
             return nodeString.ToString();
         }
     }
