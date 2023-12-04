@@ -105,6 +105,10 @@ namespace Nojumpo.Collections
             }
         }
 
+        string Search() {
+            return "";
+        }
+        
         public override string ToString() {
             StringBuilder graphStringBuilder = new StringBuilder();
 
