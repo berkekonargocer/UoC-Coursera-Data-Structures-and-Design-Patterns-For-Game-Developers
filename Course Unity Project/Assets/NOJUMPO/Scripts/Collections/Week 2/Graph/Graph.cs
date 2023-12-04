@@ -29,17 +29,17 @@ namespace Nojumpo.Collections
             return null;
         }
 
-        public bool AddNode(T nodeValue, int weight) {
+        public bool AddNode(T nodeValue) {
             if (FindNode(nodeValue) != null)
             {
                 return false;
             }
 
-            nodes.Add(new GraphNode<T>(nodeValue, weight));
+            nodes.Add(new GraphNode<T>(nodeValue));
             return true;
         }
         
-        public bool AddEdge(T node1Value, T node2Value) {
+        public bool AddEdge(T node1Value, T node2Value, int edgeWeight) {
             GraphNode<T> node1 = FindNode(node1Value);
             GraphNode<T> node2 = FindNode(node2Value);
 
@@ -53,7 +53,7 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            node1.AddNeighbor(node2);
+            node1.AddNeighbor(node2, edgeWeight);
             return true;
         }
 
