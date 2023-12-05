@@ -105,7 +105,16 @@ namespace Nojumpo.Collections
             }
         }
 
-        string Search() {
+        string Search(int startNode, int finishNode) {
+            System.Collections.Generic.LinkedList<GraphNode<int>> searchList 
+                = new System.Collections.Generic.LinkedList<GraphNode<int>>();
+
+            if (startNode == finishNode)
+            {
+                return startNode.ToString();
+            }
+            
+            if (FindNode() == null)
             return "";
         }
         
