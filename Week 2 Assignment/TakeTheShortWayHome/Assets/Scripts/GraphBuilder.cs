@@ -37,7 +37,6 @@ public class GraphBuilder : MonoBehaviour
         Waypoint start = GameObject.FindWithTag("Start").GetComponent<Waypoint>();
         Waypoint finish = GameObject.FindWithTag("Finish").GetComponent<Waypoint>();
 
-        
         graph.AddNode(start);
         graph.AddNode(finish);
         foreach (GameObject gObject in gameObjects)

@@ -14,18 +14,16 @@ public class HUD : MonoBehaviour
 	/// <summary>
 	/// Use this for initialization
 	/// </summary>
-	void Start()
+	void Awake()
 	{
-
+		EventManager.AddPathFoundListener(SetPathLength);
 	}
 
     /// <summary>
     /// Sets the path length in the hud
     /// </summary>
     /// <param name="length">path length</param>
-    void SetPathLength(float length)
-    {
-
-
+    void SetPathLength(float length) {
+	    pathLengthText.text = $"Path Length: {length.ToString("F0")}";
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A waypoint
@@ -14,13 +12,22 @@ public class Waypoint : MonoBehaviour
     [SerializeField]
     int id;
 
+    SpriteRenderer _spriteRenderer;
+
+    void Awake() {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     /// <summary>
     /// Changes waypoint to green
     /// </summary>
     /// <param name="other">other collider</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-
+        if (other.CompareTag("Player"))
+        {
+            _spriteRenderer.color = Color.green;
+        }
     }
 
     /// <summary>
