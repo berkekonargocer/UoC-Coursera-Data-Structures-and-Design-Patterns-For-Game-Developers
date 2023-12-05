@@ -29,14 +29,16 @@ public class GraphBuilder : MonoBehaviour
 
     #endregion
 
-    /// <summary>
-    /// Awake is called before Start
-    ///
-    /// Note: Leave this method public to support automated grading
-    /// </summary>
+
     public void Awake()
     {
         // add nodes (all waypoints, including start and end) to graph
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Waypoint");
+
+        foreach (GameObject gObject in gameObjects)
+        {
+             graph.AddNode(gObject.GetComponent<Waypoint>());
+        }
 
         // add neighbors for each node in graph
     }
