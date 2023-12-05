@@ -38,7 +38,7 @@ namespace Nojumpo.Collections
             nodes.Add(new GraphNode<T>(nodeValue));
             return true;
         }
-        
+
         public bool AddEdge(T node1Value, T node2Value, int edgeWeight) {
             GraphNode<T> node1 = FindNode(node1Value);
             GraphNode<T> node2 = FindNode(node2Value);
@@ -105,19 +105,28 @@ namespace Nojumpo.Collections
             }
         }
 
-        string Search(int startNode, int finishNode) {
-            System.Collections.Generic.LinkedList<GraphNode<int>> searchList 
+        string Search(T startNode, T finishNode) {
+            System.Collections.Generic.LinkedList<GraphNode<int>> searchList
                 = new System.Collections.Generic.LinkedList<GraphNode<int>>();
 
-            if (startNode == finishNode)
+            if (startNode.Equals(finishNode))
             {
                 return startNode.ToString();
             }
-            
-            if (FindNode() == null)
+
+            if (FindNode(startNode) == null )
+            {
+                return "Start Node is Null";
+            }
+
+            if (FindNode(finishNode) == null)
+            {
+                return "Finish Node is Null";
+            }
+
             return "";
         }
-        
+
         public override string ToString() {
             StringBuilder graphStringBuilder = new StringBuilder();
 
