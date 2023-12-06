@@ -32,13 +32,15 @@ public class GraphBuilder : MonoBehaviour
     public void Awake()
     {
         // add nodes (all waypoints, including start and end) to graph
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Waypoint");
+        graph = new Graph<Waypoint>();
+
+        GameObject[] waypointGameObjects = GameObject.FindGameObjectsWithTag("Waypoint");
         Waypoint start = GameObject.FindWithTag("Start").GetComponent<Waypoint>();
-        Waypoint finish = GameObject.FindWithTag("Finish").GetComponent<Waypoint>();
+        Waypoint end = GameObject.FindWithTag("End").GetComponent<Waypoint>();
 
         graph.AddNode(start);
-        graph.AddNode(finish);
-        foreach (GameObject gObject in gameObjects)
+        graph.AddNode(end);
+        foreach (GameObject gObject in waypointGameObjects)
         {
              graph.AddNode(gObject.GetComponent<Waypoint>());
         }

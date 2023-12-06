@@ -75,8 +75,8 @@ public class Traveler : MonoBehaviour
 
         // find the shortest path from start to end
         Waypoint start = GameObject.FindGameObjectWithTag("Start").GetComponent<Waypoint>();
-        Waypoint finish = GameObject.FindGameObjectWithTag("Finish").GetComponent<Waypoint>();
-        _path = Search(start, finish, GraphBuilder.Graph);
+        Waypoint end = GameObject.FindGameObjectWithTag("End").GetComponent<Waypoint>();
+        _path = Search(start, end, GraphBuilder.Graph);
 
         // move to start node and follow path (already at start node)
         travelerRigidbody2D = GetComponent<Rigidbody2D>();
@@ -272,7 +272,7 @@ public class Traveler : MonoBehaviour
         {
             travelerRigidbody2D.velocity = Vector2.zero;
             pathTraversalCompleteEvent.Invoke();
-            BlowUpWaypoints();
+            //BlowUpWaypoints();
             return;
         }
 
@@ -296,7 +296,7 @@ public class Traveler : MonoBehaviour
 
         while (currentWaypoint != null)
         {
-            Instantiate(explosionPrefab, currentWaypoint.Value.transform.position, Quaternion.identity);
+            //Instantiate(explosionPrefab, currentWaypoint.Value.transform.position, Quaternion.identity);
             Destroy(currentWaypoint.Value.gameObject);
             currentWaypoint = currentWaypoint.Next;
         }
