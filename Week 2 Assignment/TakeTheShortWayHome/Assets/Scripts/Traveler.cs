@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// A traveler
@@ -65,10 +64,7 @@ public class Traveler : MonoBehaviour
     #endregion
 
 	#region Unity methods
-
-    void Awake() {
-        
-    }
+    
     /// <summary>
     /// Use this for initialization
     /// 
@@ -87,13 +83,13 @@ public class Traveler : MonoBehaviour
         travelerRigidbody2D = GetComponent<Rigidbody2D>();
         transform.position = start.transform.position;
         _currentTarget = _path.First;
-        GoToNextPathWaypoint();
+        GoToNextWaypoint();
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject == _currentTarget.Value.gameObject)
         {
-            GoToNextPathWaypoint();
+            GoToNextWaypoint();
         }
     }
 
@@ -124,7 +120,7 @@ public class Traveler : MonoBehaviour
     /// Note: Leave this method public to support automated grading
     /// </summary>
     /// <param name="start">start value</param>
-    /// <param name="finish">finish value</param>
+    /// <param name="end">finish value</param>
     /// <param name="graph">graph to search</param>
     /// <returns>string for path or empty string if there is no path</returns>
     public LinkedList<Waypoint> Search(Waypoint start, Waypoint end, Graph<Waypoint> graph) {
@@ -207,35 +203,35 @@ public class Traveler : MonoBehaviour
             {
                 // If the neighbor is still in the search list (use the 
                 // dictionary to check this)
-                if (paths.TryGetValue(neighbor, out SearchNode<Waypoint> neighborSearchNode))
-                {
-                    // Save the distance for the current graph node + the weight 
-                    // of the edge from the current graph node to the current 
-                    // neighbor in a variable
-                    float travelCost = currentSearchNode.Distance + currentGraphNode.GetEdgeWeight(neighbor);
+                if (!paths.TryGetValue(neighbor, out SearchNode<Waypoint> neighborSearchNode))
+                    continue;
 
-                    // Retrieve the neighor search node from the dictionary
-                    // using the neighbor graph node
+                // Save the distance for the current graph node + the weight 
+                // of the edge from the current graph node to the current 
+                // neighbor in a variable
+                float travelCost = currentSearchNode.Distance + currentGraphNode.GetEdgeWeight(neighbor);
 
-                    // If the distance you just calculated is less than the 
-                    // current distance for the neighbor search node
-                    if (travelCost < neighborSearchNode.Distance)
-                    {
-                        // Set the distance for the neighbor search node to 
-                        // the new distance
-                        neighborSearchNode.Distance = travelCost;
+                // Retrieve the neighor search node from the dictionary
+                // using the neighbor graph node
 
-                        // Set the previous node for the neighbor search node 
-                        // to the current search node
-                        neighborSearchNode.Previous = currentSearchNode;
+                // If the distance you just calculated is less than the 
+                // current distance for the neighbor search node
+                if (!(travelCost < neighborSearchNode.Distance))
+                    continue;
 
-                        // Tell the search list to Reposition the neighbor 
-                        // search node. We need to do this because the change 
-                        // to the distance for the neighbor search node could 
-                        // have moved it forward in the search list
-                        searchList.Reposition(neighborSearchNode);
-                    }
-                }
+                // Set the distance for the neighbor search node to 
+                // the new distance
+                neighborSearchNode.Distance = travelCost;
+
+                // Set the previous node for the neighbor search node 
+                // to the current search node
+                neighborSearchNode.Previous = currentSearchNode;
+
+                // Tell the search list to Reposition the neighbor 
+                // search node. We need to do this because the change 
+                // to the distance for the neighbor search node could 
+                // have moved it forward in the search list
+                searchList.Reposition(neighborSearchNode);
             }
         }
 
@@ -270,40 +266,38 @@ public class Traveler : MonoBehaviour
         return path;
     }
 
-    void GoToNextPathWaypoint() {
+    void GoToNextWaypoint() {
         _currentTarget = _currentTarget.Next;
 
         if (_currentTarget == null)
         {
-            // reached end, blow up waypoints on path
             travelerRigidbody2D.velocity = Vector2.zero;
             pathTraversalCompleteEvent.Invoke();
             BlowUpWaypoints();
+            return;
         }
-        else
-        {
-            Vector2 direction = new Vector2(
-                _currentTarget.Value.transform.position.x - transform.position.x,
-                _currentTarget.Value.transform.position.y - transform.position.y);
-            direction.Normalize();
-            travelerRigidbody2D.velocity = Vector2.zero;
-            travelerRigidbody2D.AddForce(direction * IMPULSE_FORCE_MAGNITUDE,
-                ForceMode2D.Impulse);
-        }
+
+        Vector3 objectPosition = transform.position;
+        Vector3 waypointPosition = _currentTarget.Value.transform.position;
+
+        Vector2 direction = new Vector2(
+            waypointPosition.x - objectPosition.x,
+            waypointPosition.y - objectPosition.y);
+
+        direction.Normalize();
+        travelerRigidbody2D.velocity = Vector2.zero;
+        travelerRigidbody2D.AddForce(direction * IMPULSE_FORCE_MAGNITUDE, ForceMode2D.Impulse);
     }
 
     void BlowUpWaypoints() {
-        // take start and end nodes out of path
         _path.RemoveFirst();
         _path.RemoveLast();
 
-        // blow up waypoints on path
         LinkedListNode<Waypoint> currentWaypoint = _path.First;
 
         while (currentWaypoint != null)
         {
-            Instantiate(explosionPrefab, currentWaypoint.Value.transform.position,
-                Quaternion.identity);
+            Instantiate(explosionPrefab, currentWaypoint.Value.transform.position, Quaternion.identity);
             Destroy(currentWaypoint.Value.gameObject);
             currentWaypoint = currentWaypoint.Next;
         }
