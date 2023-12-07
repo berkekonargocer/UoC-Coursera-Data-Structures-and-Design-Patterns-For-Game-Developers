@@ -14,7 +14,7 @@ public class HUD : MonoBehaviour
 	/// <summary>
 	/// Use this for initialization
 	/// </summary>
-	void Awake()
+	void Start()
 	{
 		EventManager.AddPathFoundListener(SetPathLength);
 	}
