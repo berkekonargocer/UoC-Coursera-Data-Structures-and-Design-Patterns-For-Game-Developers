@@ -70,8 +70,8 @@ namespace GraphSearching
         static string Search(int start, int finish,
             Graph<int> graph)
         {
-            LinkedList<GraphNode<int>> searchList =
-                new LinkedList<GraphNode<int>>();
+            Stack<GraphNode<int>> searchStack =
+                new Stack<GraphNode<int>>();
 
             // special case for start and finish the same
             if (start == finish)
@@ -91,14 +91,13 @@ namespace GraphSearching
                 Dictionary<GraphNode<int>, PathNodeInfo<int>> pathNodes =
                     new Dictionary<GraphNode<int>, PathNodeInfo<int>>();
                 pathNodes.Add(startNode, new PathNodeInfo<int>(null));
-                searchList.AddFirst(startNode);
+                searchStack.Push(startNode);
 
                 // loop until we exhaust all possible paths
-                while (searchList.Count > 0)
+                while (searchStack.Count > 0)
                 {
                     // extract front of search list
-                    GraphNode<int> currentNode = searchList.First.Value;
-                    searchList.RemoveFirst();
+                    GraphNode<int> currentNode = searchStack.Pop();
 
                     // explore each neighbor of this node
                     foreach (GraphNode<int> neighbor in currentNode.Neighbors)
@@ -120,7 +119,7 @@ namespace GraphSearching
                             pathNodes.Add(neighbor, new PathNodeInfo<int>(currentNode));
 
                             // add neighbor to front of search list
-                            searchList.AddFirst(neighbor);
+                            searchStack.Push(neighbor);
                             Console.WriteLine("Just added " + neighbor.Value + " to search list");
                         }
                     }
