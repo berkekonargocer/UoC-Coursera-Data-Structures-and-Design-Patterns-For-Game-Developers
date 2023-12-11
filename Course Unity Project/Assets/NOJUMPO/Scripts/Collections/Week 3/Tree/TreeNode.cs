@@ -1,9 +1,6 @@
-using System;
-
-namespace Nojumpo
+namespace Nojumpo.Collections
 {
-    [Serializable]
-    public class TreeNode
+    public class TreeNode<T>
     {
         // -------------------------------- FIELDS ---------------------------------
 
