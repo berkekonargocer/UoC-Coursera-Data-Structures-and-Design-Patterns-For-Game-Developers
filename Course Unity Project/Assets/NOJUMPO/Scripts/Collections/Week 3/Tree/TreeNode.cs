@@ -14,9 +14,6 @@ namespace Nojumpo.Collections
         TreeNode<T> _parent;
         List<TreeNode<T>> _children;
 
-        
-        // ----------------------------- CONSTRUCTORS ------------------------------
-
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public bool AddChild(TreeNode<T> child) {
@@ -80,10 +77,5 @@ namespace Nojumpo.Collections
 
             return treeNodeString.ToString();
         }
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
-
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
     }
 }
