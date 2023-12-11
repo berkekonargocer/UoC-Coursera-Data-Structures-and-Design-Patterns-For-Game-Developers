@@ -12,7 +12,10 @@ namespace Nojumpo.Collections
         List<TreeNode<T>> _nodes = new List<TreeNode<T>>();
 
         // ----------------------------- CONSTRUCTORS ------------------------------
-
+        public Tree(T value) {
+            _root = new TreeNode<T>(value, null);
+            _nodes.Add(_root);
+        }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
 

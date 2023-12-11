@@ -14,6 +14,12 @@ namespace Nojumpo.Collections
         TreeNode<T> _parent;
         List<TreeNode<T>> _children;
 
+        // ----------------------------- CONSTRUCTORS ------------------------------
+        public TreeNode(T value, TreeNode<T> parent) {
+            _value = value;
+            _parent = parent;
+            _children = new List<TreeNode<T>>();
+        }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public bool AddChild(TreeNode<T> child) {
@@ -41,7 +47,7 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveAllChildren() {
-            for (int i = _children.Count; i >= 0 ; i--)
+            for (int i = _children.Count; i >= 0; i--)
             {
                 _children[i].Parent = null;
                 _children.RemoveAt(i);
@@ -52,7 +58,7 @@ namespace Nojumpo.Collections
 
         public override string ToString() {
             StringBuilder treeNodeString = new StringBuilder();
-            
+
             treeNodeString.Append($"[Node Value: {_value} Parent Value: ");
 
             if (_parent != null)
@@ -68,7 +74,7 @@ namespace Nojumpo.Collections
 
             for (int i = 0; i < _children.Count; i++)
             {
-                treeNodeString.Append($"{_children[i]._value }");
+                treeNodeString.Append($"{_children[i]._value}");
             }
 
             treeNodeString.Append("]");
