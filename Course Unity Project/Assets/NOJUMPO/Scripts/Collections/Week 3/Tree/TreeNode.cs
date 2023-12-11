@@ -33,13 +33,11 @@ namespace Nojumpo.Collections
         }
 
         public bool RemoveChild(TreeNode<T> child) {
-            if (_children.Contains(child))
-            {
-                child.Parent = null;
-                return _children.Remove(child);
-            }
+            if (!_children.Contains(child))
+                return false;
 
-            return false;
+            child.Parent = null;
+            return _children.Remove(child);
         }
 
         public bool RemoveAllChildren() {
