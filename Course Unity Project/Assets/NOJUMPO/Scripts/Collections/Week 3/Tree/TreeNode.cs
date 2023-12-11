@@ -34,6 +34,16 @@ namespace Nojumpo.Collections
             return true;
         }
 
+        public bool RemoveChild(TreeNode<T> child) {
+            if (_children.Contains(child))
+            {
+                child.Parent = null;
+                return _children.Remove(child);
+            }
+
+            return false;
+        }
+
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
