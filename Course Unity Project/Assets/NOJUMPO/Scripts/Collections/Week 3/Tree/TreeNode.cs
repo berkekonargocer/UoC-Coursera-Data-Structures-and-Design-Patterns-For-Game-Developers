@@ -44,6 +44,16 @@ namespace Nojumpo.Collections
             return false;
         }
 
+        public bool RemoveAllChildren() {
+            for (int i = _children.Count; i >= 0 ; i--)
+            {
+                _children[i].Parent = null;
+                _children.RemoveAt(i);
+            }
+
+            return true;
+        }
+
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
