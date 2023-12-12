@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace Nojumpo.Collections
 {
@@ -29,7 +30,7 @@ namespace Nojumpo.Collections
 
             return null;
         }
-        
+
         public bool AddNode(TreeNode<T> nodeToAdd) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
@@ -91,7 +92,7 @@ namespace Nojumpo.Collections
                 node.RemoveAllChildren();
             }
 
-            for (int i = 0; i < _nodes.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 _nodes.RemoveAt(i);
             }
@@ -99,9 +100,30 @@ namespace Nojumpo.Collections
             _root = null;
         }
 
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
+        public override string ToString() {
+            StringBuilder treeStringBuilder = new StringBuilder();
 
+            treeStringBuilder.Append("Root: ");
 
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+            if (_root == null)
+            {
+                treeStringBuilder.Append("null");
+                return treeStringBuilder.ToString();
+            }
+
+            treeStringBuilder.Append($"{_root} \n Nodes: ");
+
+            for (int i = 0; i < Count; i++)
+            {
+                treeStringBuilder.Append($"{_nodes[i]}");
+
+                if (i < Count - 1)
+                {
+                    treeStringBuilder.Append(",");
+                }
+            }
+
+            return treeStringBuilder.ToString();
+        }
     }
 }
