@@ -18,7 +18,20 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        public bool AddNode(TreeNode<T> nodeToAdd) {
+            if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
+            {
+                return false;
+            }
 
+            if (nodeToAdd.Parent.Children.Contains(nodeToAdd))
+            {
+                return false;
+            }
+
+            _nodes.Add(nodeToAdd);
+            return nodeToAdd.Parent.AddChild(nodeToAdd);
+        }
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
