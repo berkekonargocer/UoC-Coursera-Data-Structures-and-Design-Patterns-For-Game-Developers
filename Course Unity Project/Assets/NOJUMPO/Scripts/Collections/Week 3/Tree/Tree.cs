@@ -39,13 +39,37 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            if (!nodeToRemove.Parent.Children.Contains(nodeToRemove))
+            if (nodeToRemove == _root)
+            {
+                Clear();
+                return true;
+            }
+
+            bool removeFromParent = nodeToRemove.Parent.RemoveChild(nodeToRemove);
+
+            if (!removeFromParent)
             {
                 return false;
             }
 
-            _nodes.Remove(nodeToRemove);
-            return nodeToRemove.Parent.RemoveChild(nodeToRemove);
+            bool removeFromTree = _nodes.Remove(nodeToRemove);
+
+            if (!removeFromTree)
+            {
+                return false;
+            }
+
+            if (nodeToRemove.Children.Count <= 0)
+                return true;
+
+            IList<TreeNode<T>> children = nodeToRemove.Children;
+
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                RemoveNode(children[i]);
+            }
+
+            return true;
         }
 
         public void Clear() {
