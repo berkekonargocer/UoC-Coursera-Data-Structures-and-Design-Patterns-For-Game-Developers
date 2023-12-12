@@ -33,6 +33,36 @@ namespace Nojumpo.Collections
             return nodeToAdd.Parent.AddChild(nodeToAdd);
         }
 
+        public bool RemoveNode(TreeNode<T> nodeToRemove) {
+            if (nodeToRemove == null || !_nodes.Contains(nodeToRemove))
+            {
+                return false;
+            }
+
+            if (!nodeToRemove.Parent.Children.Contains(nodeToRemove))
+            {
+                return false;
+            }
+
+            _nodes.Remove(nodeToRemove);
+            return nodeToRemove.Parent.RemoveChild(nodeToRemove);
+        }
+
+        public void Clear() {
+            foreach (TreeNode<T> node in _nodes)
+            {
+                node.Parent = null;
+                node.RemoveAllChildren();
+            }
+
+            for (int i = 0; i < _nodes.Count; i++)
+            {
+                _nodes.RemoveAt(i);
+            }
+
+            _root = null;
+        }
+
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
