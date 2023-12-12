@@ -107,7 +107,7 @@ namespace Nojumpo.Collections
 
             if (_root == null)
             {
-                treeStringBuilder.Append("null");
+                treeStringBuilder.Append("null ");
                 return treeStringBuilder.ToString();
             }
 
@@ -119,7 +119,7 @@ namespace Nojumpo.Collections
 
                 if (i < Count - 1)
                 {
-                    treeStringBuilder.Append(",");
+                    treeStringBuilder.Append(", ");
                 }
             }
 

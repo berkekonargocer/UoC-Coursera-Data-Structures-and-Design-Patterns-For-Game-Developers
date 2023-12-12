@@ -7,7 +7,7 @@ namespace Nojumpo
     {
         // -------------------------------- FIELDS ---------------------------------
         readonly Graph<int> _intGraph = new Graph<int>();
-
+        
         
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {

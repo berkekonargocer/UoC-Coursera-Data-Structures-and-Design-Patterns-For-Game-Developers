@@ -63,18 +63,23 @@ namespace Nojumpo.Collections
 
             if (_parent != null)
             {
-                treeNodeString.Append($"{_parent._value}");
+                treeNodeString.Append($"{_parent._value} ");
             }
             else
             {
-                treeNodeString.Append("null");
+                treeNodeString.Append("null ");
             }
 
             treeNodeString.Append("Children Values: ");
 
             for (int i = 0; i < _children.Count; i++)
             {
-                treeNodeString.Append($"{_children[i]._value}");
+                treeNodeString.Append($"{_children[i].Value}");
+
+                if (i < _children.Count - 1)
+                {
+                    treeNodeString.Append(", ");
+                }
             }
 
             treeNodeString.Append("]");
