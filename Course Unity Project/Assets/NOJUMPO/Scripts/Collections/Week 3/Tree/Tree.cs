@@ -18,6 +18,18 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        public TreeNode<T> Find(T value) {
+            foreach (TreeNode<T> node in _nodes)
+            {
+                if (node.Value.Equals(value))
+                {
+                    return node;
+                }
+            }
+
+            return null;
+        }
+        
         public bool AddNode(TreeNode<T> nodeToAdd) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
