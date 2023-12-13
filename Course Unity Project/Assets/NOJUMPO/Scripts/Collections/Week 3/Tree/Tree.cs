@@ -19,6 +19,8 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        
+        // O(n)
         public TreeNode<T> Find(T value) {
             foreach (TreeNode<T> node in _nodes)
             {
@@ -31,6 +33,7 @@ namespace Nojumpo.Collections
             return null;
         }
 
+        // O(n)
         public bool AddNode(TreeNode<T> nodeToAdd) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
@@ -46,6 +49,8 @@ namespace Nojumpo.Collections
             return nodeToAdd.Parent.AddChild(nodeToAdd);
         }
 
+        
+        // O(n²)
         public bool RemoveNode(TreeNode<T> nodeToRemove) {
             if (nodeToRemove == null || !_nodes.Contains(nodeToRemove))
             {
@@ -85,6 +90,7 @@ namespace Nojumpo.Collections
             return true;
         }
 
+        // O(n²)
         public void Clear() {
             foreach (TreeNode<T> node in _nodes)
             {
@@ -100,6 +106,7 @@ namespace Nojumpo.Collections
             _root = null;
         }
 
+        // O(n)
         public override string ToString() {
             StringBuilder treeStringBuilder = new StringBuilder();
 
