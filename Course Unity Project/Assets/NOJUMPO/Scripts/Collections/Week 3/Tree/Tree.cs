@@ -90,7 +90,7 @@ namespace Nojumpo.Collections
             return true;
         }
 
-        // O(n²)
+        // O(n)
         public void Clear() {
             foreach (TreeNode<T> node in _nodes)
             {
