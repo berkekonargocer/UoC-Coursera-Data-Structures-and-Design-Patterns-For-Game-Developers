@@ -41,7 +41,7 @@ namespace Nojumpo.Collections
         }
 
         // O(n)
-        public bool RemoveChild(TreeNode<T> child) {
+        public virtual bool RemoveChild(TreeNode<T> child) {
             if (!_children.Contains(child))
                 return false;
 
