@@ -69,6 +69,22 @@ namespace Nojumpo.Collections
             
             return false;
         }
+
+        public bool RemoveBothChildren() {
+            if (_leftChild != null)
+            {
+                _leftChild.Parent = null;
+                _leftChild = null;
+            }
+
+            if (_rightChild != null)
+            {
+                _rightChild.Parent = null;
+                _rightChild = null;
+            }
+
+            return true;
+        }
         
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
