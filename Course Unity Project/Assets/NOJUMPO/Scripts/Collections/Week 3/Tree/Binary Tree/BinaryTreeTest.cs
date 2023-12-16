@@ -19,6 +19,7 @@ namespace Nojumpo
 
         void Start() {
             Debug.Log($"{_binaryTree}");
+            PostOrderTraversal(_binaryTree.Root);
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
@@ -28,11 +29,9 @@ namespace Nojumpo
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
-
-
-        private BinaryTree<char> BuildBinaryTree() {
+        BinaryTree<char> BuildBinaryTree() {
             BinaryTree<char> tree = new BinaryTree<char>('A');
-            
+
             BinaryTreeNode<char> nodeB = new BinaryTreeNode<char>('B', tree.Root);
             BinaryTreeNode<char> nodeC = new BinaryTreeNode<char>('C', tree.Root);
             BinaryTreeNode<char> nodeD = new BinaryTreeNode<char>('D', nodeB);
@@ -50,9 +49,24 @@ namespace Nojumpo
             tree.AddNode(nodeG, ChildSide.RIGHT);
             tree.AddNode(nodeH, ChildSide.RIGHT);
             tree.AddNode(nodeI, ChildSide.LEFT);
-            
+
             return tree;
         }
 
+        void PostOrderTraversal(BinaryTreeNode<char> node) {
+            if (node == null)
+                return;
+            
+            Debug.Log($"{node.Value} ");
+
+            if (node.LeftChild != null)
+            {
+                PostOrderTraversal(node.LeftChild);
+            }
+            if (node.RightChild != null)
+            {
+                PostOrderTraversal(node.RightChild);
+            }
+        }
     }
 }
