@@ -19,6 +19,18 @@ namespace Nojumpo.Collections
 
         
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
+        public BinaryTreeNode<T> Find(T value) {
+            foreach (BinaryTreeNode<T> node in _nodes)
+            {
+                if (node.Value.Equals(value))
+                {
+                    return node;
+                }
+            }
+
+            return null;
+        }
+
         public bool AddNode(BinaryTreeNode<T> nodeToAdd, ChildSide childSide) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
