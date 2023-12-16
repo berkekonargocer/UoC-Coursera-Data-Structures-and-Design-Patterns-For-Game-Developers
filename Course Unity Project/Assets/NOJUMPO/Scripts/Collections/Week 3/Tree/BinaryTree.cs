@@ -17,7 +17,7 @@ namespace Nojumpo.Collections
             _nodes.Add(_root);
         }
 
-        
+
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public BinaryTreeNode<T> Find(T value) {
             foreach (BinaryTreeNode<T> node in _nodes)
@@ -41,7 +41,7 @@ namespace Nojumpo.Collections
             {
                 return false;
             }
-            
+
             _nodes.Add(nodeToAdd);
             return nodeToAdd.Parent.AddChild(nodeToAdd, childSide);
         }
@@ -85,13 +85,21 @@ namespace Nojumpo.Collections
             return true;
         }
 
-        public void Clear() {
-            
-        }
-        
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+        void Clear() {
+            foreach (BinaryTreeNode<T> node in _nodes)
+            {
+                node.Parent = null;
+                node.RemoveBothChildren();
+            }
+
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                _nodes.RemoveAt(i);
+            }
+
+            _root = null;
+        }
     }
 }
