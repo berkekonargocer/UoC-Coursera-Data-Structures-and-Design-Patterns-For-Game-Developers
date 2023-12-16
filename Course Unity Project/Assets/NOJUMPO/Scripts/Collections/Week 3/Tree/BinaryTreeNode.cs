@@ -28,8 +28,8 @@ namespace Nojumpo.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        public bool AddChild(BinaryTreeNode<T> child, ChildSide childSide) {
-            if (_leftChild == child || _rightChild == child)
+        public bool AddChild(BinaryTreeNode<T> childToAdd, ChildSide childSide) {
+            if (_leftChild == childToAdd || _rightChild == childToAdd)
             {
                 return false;
             }
@@ -42,17 +42,33 @@ namespace Nojumpo.Collections
 
             if (childSide == ChildSide.LEFT)
             {
-                _leftChild = child;
+                _leftChild = childToAdd;
             }
             else
             {
-                _rightChild = child;
+                _rightChild = childToAdd;
             }
             
-            child.Parent = this;
+            childToAdd.Parent = this;
             return true;
         }
-        
+
+        public bool RemoveChild(BinaryTreeNode<T> childToRemove) {
+            if (_leftChild == childToRemove)
+            {
+                _leftChild.Parent = null;
+                _leftChild = null;
+                return true;
+            }
+
+            if (_rightChild == childToRemove)
+            {
+                _rightChild.Parent = null;
+                _rightChild = null;
+            }
+            
+            return false;
+        }
         
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
