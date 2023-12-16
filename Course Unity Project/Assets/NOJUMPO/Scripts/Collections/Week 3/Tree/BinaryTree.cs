@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace Nojumpo.Collections
 {
@@ -85,6 +86,31 @@ namespace Nojumpo.Collections
             return true;
         }
 
+        public override string ToString() {
+            StringBuilder treeStringBuilder = new StringBuilder();
+
+            treeStringBuilder.Append("Root: ");
+
+            if (_root == null)
+            {
+                treeStringBuilder.Append("null ");
+                return treeStringBuilder.ToString();
+            }
+
+            treeStringBuilder.Append($"{_root} \n Nodes: ");
+
+            for (int i = 0; i < Count; i++)
+            {
+                treeStringBuilder.Append($"{_nodes[i]}");
+
+                if (i < Count - 1)
+                {
+                    treeStringBuilder.Append(", ");
+                }
+            }
+
+            return treeStringBuilder.ToString();
+        }
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
         void Clear() {
