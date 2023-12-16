@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Nojumpo.Collections
@@ -34,8 +33,50 @@ namespace Nojumpo.Collections
             _nodes.Add(nodeToAdd);
             return nodeToAdd.Parent.AddChild(nodeToAdd, childSide);
         }
-        
 
+        public bool RemoveNode(BinaryTreeNode<T> nodeToRemove) {
+            if (nodeToRemove == null)
+            {
+                return false;
+            }
+
+            if (nodeToRemove == _root)
+            {
+                Clear();
+                return true;
+            }
+
+            bool removeFromParent = nodeToRemove.Parent.RemoveChild(nodeToRemove);
+
+            if (!removeFromParent)
+            {
+                return false;
+            }
+
+            bool removeFromTree = _nodes.Remove(nodeToRemove);
+
+            if (!removeFromTree)
+            {
+                return false;
+            }
+
+            if (nodeToRemove.LeftChild != null)
+            {
+                RemoveNode(nodeToRemove.LeftChild);
+            }
+
+            if (nodeToRemove.RightChild != null)
+            {
+                RemoveNode(nodeToRemove.RightChild);
+            }
+
+            return true;
+        }
+
+        public void Clear() {
+            
+        }
+        
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
