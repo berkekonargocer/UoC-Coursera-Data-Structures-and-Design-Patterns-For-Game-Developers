@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace Nojumpo.Collections
 {
@@ -16,8 +17,8 @@ namespace Nojumpo.Collections
         BinaryTreeNode<T> _leftChild;
         BinaryTreeNode<T> _rightChild;
         List<BinaryTreeNode<T>> _children;
-        
-        
+
+
         // ----------------------------- CONSTRUCTORS ------------------------------
         public BinaryTreeNode(T value, BinaryTreeNode<T> parent) {
             _value = value;
@@ -34,7 +35,7 @@ namespace Nojumpo.Collections
                 return false;
             }
 
-            if (childSide == ChildSide.LEFT && _leftChild != null || 
+            if (childSide == ChildSide.LEFT && _leftChild != null ||
                 childSide == ChildSide.RIGHT && _rightChild != null)
             {
                 return false;
@@ -48,7 +49,7 @@ namespace Nojumpo.Collections
             {
                 _rightChild = childToAdd;
             }
-            
+
             childToAdd.Parent = this;
             return true;
         }
@@ -66,7 +67,7 @@ namespace Nojumpo.Collections
                 _rightChild.Parent = null;
                 _rightChild = null;
             }
-            
+
             return false;
         }
 
@@ -85,7 +86,24 @@ namespace Nojumpo.Collections
 
             return true;
         }
-        
+
+        public override string ToString() {
+            StringBuilder binaryTreeNode = new StringBuilder();
+            binaryTreeNode.Append($"[Node Value: {_value} Parent Value: ");
+
+            binaryTreeNode.Append(_parent != null ? $"{_parent.Value} " : "null ");
+
+            binaryTreeNode.Append("Left Child Value: ");
+            binaryTreeNode.Append(_leftChild != null ? $"{_leftChild.Value} " : "null ");
+
+            binaryTreeNode.Append("Right Child Value: ");
+            binaryTreeNode.Append(_rightChild != null ? $"{_rightChild.Value} " : "null ");
+
+            binaryTreeNode.Append("]");
+
+            return binaryTreeNode.ToString();
+        }
+
 
         // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
