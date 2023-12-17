@@ -68,5 +68,23 @@ namespace Nojumpo
                 PreOrderTraversal(node.RightChild);
             }
         }
+        
+        void InOrderTraversal(BinaryTreeNode<char> node) {
+            if (node == null)
+                return;
+
+            if (node.LeftChild != null)
+            {
+                PreOrderTraversal(node.LeftChild);
+            }
+            
+            Debug.Log($"{node.Value} ");
+            
+            if (node.RightChild != null)
+            {
+                PreOrderTraversal(node.RightChild);
+            }
+        }
+        
     }
 }
