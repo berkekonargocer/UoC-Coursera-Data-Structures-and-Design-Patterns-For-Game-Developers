@@ -19,7 +19,7 @@ namespace Nojumpo
 
         void Start() {
             Debug.Log($"{_binaryTree}");
-            PostOrderTraversal(_binaryTree.Root);
+            PreOrderTraversal(_binaryTree.Root);
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
@@ -53,7 +53,7 @@ namespace Nojumpo
             return tree;
         }
 
-        void PostOrderTraversal(BinaryTreeNode<char> node) {
+        void PreOrderTraversal(BinaryTreeNode<char> node) {
             if (node == null)
                 return;
             
@@ -61,11 +61,11 @@ namespace Nojumpo
 
             if (node.LeftChild != null)
             {
-                PostOrderTraversal(node.LeftChild);
+                PreOrderTraversal(node.LeftChild);
             }
             if (node.RightChild != null)
             {
-                PostOrderTraversal(node.RightChild);
+                PreOrderTraversal(node.RightChild);
             }
         }
     }
