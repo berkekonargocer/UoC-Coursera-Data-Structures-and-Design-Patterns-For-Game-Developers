@@ -1,4 +1,3 @@
-using System;
 using Nojumpo.Collections;
 using UnityEngine;
 
@@ -84,6 +83,22 @@ namespace Nojumpo
             {
                 PreOrderTraversal(node.RightChild);
             }
+        }
+
+        void PostOrderTraversal(BinaryTreeNode<char> node) {
+            if (node == null)
+                return;
+
+            if (node.LeftChild != null)
+            {
+                PostOrderTraversal(node.LeftChild);
+            }
+            if (node.RightChild != null)
+            {
+                PostOrderTraversal(node.RightChild);
+            }
+                
+            Debug.Log($"{node.Value} ");
         }
         
     }
