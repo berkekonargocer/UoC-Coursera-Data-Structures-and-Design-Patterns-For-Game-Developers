@@ -140,7 +140,8 @@ namespace Nojumpo.Collections
 
                     if (neighbor.Value.Equals(finishNode))
                     {
-                        
+                        pathNodes.Add(neighbor.Key, currentNode);
+                        return ConvertPathToString(neighbor.Key, pathNodes);
                     }
                     
                 }
@@ -152,6 +153,35 @@ namespace Nojumpo.Collections
             return "";
         }
 
+        string ConvertPathToString(NJGraphNode<T> endNode, Dictionary<NJGraphNode<T>, NJGraphNode<T>> pathNodes)
+        {
+            // build linked list for path in correct order
+            LinkedList<NJGraphNode<T>> path = new LinkedList<NJGraphNode<T>>();
+            path.AddFirst(endNode);
+            NJGraphNode<T> previous = pathNodes[endNode];
+            while (previous != null)
+            {
+                path.AddFirst(previous);
+                previous = pathNodes[previous];
+            }
+
+            // build and return string
+            StringBuilder pathString = new StringBuilder();
+            LinkedListNode<NJGraphNode<T>> currentNode = path.First;
+            int nodeCount = 0;
+            while (currentNode != null)
+            {
+                nodeCount++;
+                pathString.Append(currentNode.Value.Value);
+                if (nodeCount < path.Count)
+                {
+                    pathString.Append(" ");
+                }
+                currentNode = currentNode.Next;
+            }
+            return pathString.ToString();
+        }
+        
         public override string ToString() {
             StringBuilder graphStringBuilder = new StringBuilder();
 
