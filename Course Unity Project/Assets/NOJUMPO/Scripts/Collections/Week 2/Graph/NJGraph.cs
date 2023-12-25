@@ -144,6 +144,12 @@ namespace Nojumpo.Collections
                         return ConvertPathToString(neighbor.Key, pathNodes);
                     }
                     
+                    if (pathNodes.ContainsKey(neighbor.Key))
+                    {
+                        continue;    
+                    }
+                    
+                    pathNodes.Add(neighbor.Key, currentNode);
                 }
             }
 
