@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Nojumpo.Collections;
 using UnityEngine;
 
@@ -6,19 +7,19 @@ namespace Nojumpo
     public class BinaryTreeTest : MonoBehaviour
     {
         // -------------------------------- FIELDS ---------------------------------
-        BinaryTree<char> _binaryTree;
+        NJBinaryTree<char> _njBinaryTree;
 
         // ----------------------------- CONSTRUCTORS ------------------------------
 
 
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
-            _binaryTree = BuildBinaryTree();
+            _njBinaryTree = BuildBinaryTree();
         }
 
         void Start() {
-            Debug.Log($"{_binaryTree}");
-            PreOrderTraversal(_binaryTree.Root);
+            Debug.Log($"{_njBinaryTree}");
+            PreOrderTraversal(_njBinaryTree.Root);
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
@@ -28,17 +29,17 @@ namespace Nojumpo
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
-        BinaryTree<char> BuildBinaryTree() {
-            BinaryTree<char> tree = new BinaryTree<char>('A');
+        NJBinaryTree<char> BuildBinaryTree() {
+            NJBinaryTree<char> tree = new NJBinaryTree<char>('A');
 
-            BinaryTreeNode<char> nodeB = new BinaryTreeNode<char>('B', tree.Root);
-            BinaryTreeNode<char> nodeC = new BinaryTreeNode<char>('C', tree.Root);
-            BinaryTreeNode<char> nodeD = new BinaryTreeNode<char>('D', nodeB);
-            BinaryTreeNode<char> nodeE = new BinaryTreeNode<char>('E', nodeB);
-            BinaryTreeNode<char> nodeF = new BinaryTreeNode<char>('F', nodeE);
-            BinaryTreeNode<char> nodeG = new BinaryTreeNode<char>('G', nodeE);
-            BinaryTreeNode<char> nodeH = new BinaryTreeNode<char>('H', nodeC);
-            BinaryTreeNode<char> nodeI = new BinaryTreeNode<char>('I', nodeH);
+            NJBinaryTreeNode<char> nodeB = new NJBinaryTreeNode<char>('B', tree.Root);
+            NJBinaryTreeNode<char> nodeC = new NJBinaryTreeNode<char>('C', tree.Root);
+            NJBinaryTreeNode<char> nodeD = new NJBinaryTreeNode<char>('D', nodeB);
+            NJBinaryTreeNode<char> nodeE = new NJBinaryTreeNode<char>('E', nodeB);
+            NJBinaryTreeNode<char> nodeF = new NJBinaryTreeNode<char>('F', nodeE);
+            NJBinaryTreeNode<char> nodeG = new NJBinaryTreeNode<char>('G', nodeE);
+            NJBinaryTreeNode<char> nodeH = new NJBinaryTreeNode<char>('H', nodeC);
+            NJBinaryTreeNode<char> nodeI = new NJBinaryTreeNode<char>('I', nodeH);
 
             tree.AddNode(nodeB, ChildSide.LEFT);
             tree.AddNode(nodeC, ChildSide.RIGHT);
@@ -52,7 +53,7 @@ namespace Nojumpo
             return tree;
         }
 
-        void PreOrderTraversal(BinaryTreeNode<char> node) {
+        void PreOrderTraversal(NJBinaryTreeNode<char> node) {
             if (node == null)
                 return;
             
@@ -68,7 +69,7 @@ namespace Nojumpo
             }
         }
         
-        void InOrderTraversal(BinaryTreeNode<char> node) {
+        void InOrderTraversal(NJBinaryTreeNode<char> node) {
             if (node == null)
                 return;
 
@@ -85,7 +86,7 @@ namespace Nojumpo
             }
         }
 
-        void PostOrderTraversal(BinaryTreeNode<char> node) {
+        void PostOrderTraversal(NJBinaryTreeNode<char> node) {
             if (node == null)
                 return;
 
@@ -100,6 +101,12 @@ namespace Nojumpo
                 
             Debug.Log($"{node.Value} ");
         }
-        
+
+        void BreadthFirstTraversal(NJBinaryTreeNode<char> node) {
+            if (node == null)
+                return;
+
+            LinkedList<NJBinaryTreeNode<char>> searchList = new LinkedList<NJBinaryTreeNode<char>>();
+        }
     }
 }
