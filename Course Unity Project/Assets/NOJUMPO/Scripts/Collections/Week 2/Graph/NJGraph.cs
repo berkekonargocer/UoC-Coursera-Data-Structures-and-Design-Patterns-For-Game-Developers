@@ -137,7 +137,7 @@ namespace NOJUMPO.Collections
 
                 foreach (KeyValuePair<NJGraphNode<T>, int> neighbor in currentNode.Neighbors)
                 {
-                    if (neighbor.Value.Equals(finishNode))
+                    if (neighbor.Key.Value.Equals(finishNode))
                     {
                         pathNodes.Add(neighbor.Key, currentNode);
                         return ConvertPathToString(neighbor.Key, pathNodes);

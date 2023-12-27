@@ -26,7 +26,7 @@ namespace NOJUMPO
 
         void Start() {
             Debug.Log($"{_intNJGraph}");
-            _intNJGraph.Search(9, 6, NJGraphSearchType.DEPTH_FIRST);
+            Debug.Log(_intNJGraph.Search(9, 6, NJGraphSearchType.DEPTH_FIRST));
             _intNJGraph.RemoveNode(5);
             Debug.Log($"{_intNJGraph}");
             NJGraphNode<int> neighborToLook = _intNJGraph.FindNode(4);
