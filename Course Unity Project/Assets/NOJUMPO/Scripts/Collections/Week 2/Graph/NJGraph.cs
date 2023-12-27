@@ -106,16 +106,15 @@ namespace NOJUMPO.Collections
             }
         }
 
-        string Search(T startNode, T finishNode, NJGraphSearchType njGraphSearchType) {
-
+        public string Search(T startNode, T finishNode, NJGraphSearchType njGraphSearchType) {
             LinkedList<NJGraphNode<T>> searchList = new LinkedList<NJGraphNode<T>>();
-            
+
             if (startNode.Equals(finishNode))
             {
                 return startNode.ToString();
             }
 
-            if (FindNode(startNode) == null )
+            if (FindNode(startNode) == null)
             {
                 return "Start Node is Null";
             }
@@ -127,7 +126,7 @@ namespace NOJUMPO.Collections
 
             NJGraphNode<T> startingNode = FindNode(startNode);
             Dictionary<NJGraphNode<T>, NJGraphNode<T>> pathNodes = new Dictionary<NJGraphNode<T>, NJGraphNode<T>>();
-            
+
             pathNodes.Add(startingNode, null);
             searchList.AddFirst(startingNode);
 
@@ -135,21 +134,20 @@ namespace NOJUMPO.Collections
             {
                 NJGraphNode<T> currentNode = searchList.First.Value;
                 searchList.RemoveFirst();
-                
+
                 foreach (KeyValuePair<NJGraphNode<T>, int> neighbor in currentNode.Neighbors)
                 {
-
                     if (neighbor.Value.Equals(finishNode))
                     {
                         pathNodes.Add(neighbor.Key, currentNode);
                         return ConvertPathToString(neighbor.Key, pathNodes);
                     }
-                    
+
                     if (pathNodes.ContainsKey(neighbor.Key))
                     {
-                        continue;    
+                        continue;
                     }
-                    
+
                     pathNodes.Add(neighbor.Key, currentNode);
 
                     if (njGraphSearchType == NJGraphSearchType.DEPTH_FIRST)
@@ -160,19 +158,20 @@ namespace NOJUMPO.Collections
                     {
                         searchList.AddLast(neighbor.Key);
                     }
-                    Debug.Log($"Just Added {neighbor.Value}");
+
+                    Debug.Log($"Just Added {neighbor.Key.Value}");
                 }
             }
-            
+
             return "The Path Is Not Existent";
         }
 
-        string ConvertPathToString(NJGraphNode<T> endNode, Dictionary<NJGraphNode<T>, NJGraphNode<T>> pathNodes)
-        {
+        string ConvertPathToString(NJGraphNode<T> endNode, Dictionary<NJGraphNode<T>, NJGraphNode<T>> pathNodes) {
             // build linked list for path in correct order
             LinkedList<NJGraphNode<T>> path = new LinkedList<NJGraphNode<T>>();
             path.AddFirst(endNode);
             NJGraphNode<T> previous = pathNodes[endNode];
+
             while (previous != null)
             {
                 path.AddFirst(previous);
@@ -183,19 +182,23 @@ namespace NOJUMPO.Collections
             StringBuilder pathString = new StringBuilder();
             LinkedListNode<NJGraphNode<T>> currentNode = path.First;
             int nodeCount = 0;
+
             while (currentNode != null)
             {
                 nodeCount++;
                 pathString.Append(currentNode.Value.Value);
+
                 if (nodeCount < path.Count)
                 {
                     pathString.Append(" ");
                 }
+
                 currentNode = currentNode.Next;
             }
+
             return pathString.ToString();
         }
-        
+
         public override string ToString() {
             StringBuilder graphStringBuilder = new StringBuilder();
 
