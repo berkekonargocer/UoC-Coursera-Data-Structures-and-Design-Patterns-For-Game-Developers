@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public abstract class DynamicArray<T>
     {

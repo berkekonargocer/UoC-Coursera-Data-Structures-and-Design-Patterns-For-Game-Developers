@@ -1,7 +1,7 @@
-using Nojumpo.Collections;
+using NOJUMPO.Collections;
 using UnityEngine;
 
-namespace Nojumpo
+namespace NOJUMPO
 {
     public class TreeTest : MonoBehaviour
     {

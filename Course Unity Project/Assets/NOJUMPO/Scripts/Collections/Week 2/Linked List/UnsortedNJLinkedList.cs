@@ -1,4 +1,4 @@
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public class UnsortedNJLinkedList<T> : NJLinkedList<T>
     {

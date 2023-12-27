@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Nojumpo.Collections;
+using NOJUMPO.Collections;
 using UnityEngine;
 
-namespace Nojumpo
+namespace NOJUMPO
 {
     public class BinaryTreeTest : MonoBehaviour
     {

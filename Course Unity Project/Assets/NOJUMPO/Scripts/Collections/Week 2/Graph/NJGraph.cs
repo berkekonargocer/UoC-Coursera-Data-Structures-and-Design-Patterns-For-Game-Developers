@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public class NJGraph<T>
     {
@@ -105,7 +106,7 @@ namespace Nojumpo.Collections
             }
         }
 
-        string Search(T startNode, T finishNode) {
+        string Search(T startNode, T finishNode, NJGraphSearchType njGraphSearchType) {
 
             LinkedList<NJGraphNode<T>> searchList = new LinkedList<NJGraphNode<T>>();
             
@@ -150,13 +151,20 @@ namespace Nojumpo.Collections
                     }
                     
                     pathNodes.Add(neighbor.Key, currentNode);
+
+                    if (njGraphSearchType == NJGraphSearchType.DEPTH_FIRST)
+                    {
+                        searchList.AddFirst(neighbor.Key);
+                    }
+                    else
+                    {
+                        searchList.AddLast(neighbor.Key);
+                    }
+                    Debug.Log($"Just Added {neighbor.Value}");
                 }
             }
-
-
             
-            
-            return "";
+            return "The Path Is Not Existent";
         }
 
         string ConvertPathToString(NJGraphNode<T> endNode, Dictionary<NJGraphNode<T>, NJGraphNode<T>> pathNodes)

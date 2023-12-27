@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public class NJTreeNode<T>
     {

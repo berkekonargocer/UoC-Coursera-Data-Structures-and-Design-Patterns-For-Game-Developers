@@ -1,7 +1,7 @@
 using UnityEngine;
-using Nojumpo.Collections;
+using NOJUMPO.Collections;
 
-namespace Nojumpo
+namespace NOJUMPO
 {
     public class GraphTest : MonoBehaviour
     {

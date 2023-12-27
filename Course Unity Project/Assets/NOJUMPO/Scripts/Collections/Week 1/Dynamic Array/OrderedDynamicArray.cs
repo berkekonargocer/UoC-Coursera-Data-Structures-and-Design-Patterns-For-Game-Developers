@@ -1,6 +1,6 @@
 using System;
 
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public class OrderedDynamicArray<T> : DynamicArray<T> where T : IComparable
     {

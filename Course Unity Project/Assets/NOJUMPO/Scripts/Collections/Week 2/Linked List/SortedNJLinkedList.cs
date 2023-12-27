@@ -1,6 +1,6 @@
 using System;
 
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     public class SortedNJLinkedList<T> : NJLinkedList<T> where T : IComparable
     {

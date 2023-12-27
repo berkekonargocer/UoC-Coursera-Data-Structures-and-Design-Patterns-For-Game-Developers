@@ -1,4 +1,4 @@
-namespace Nojumpo.Collections
+namespace NOJUMPO.Collections
 {
     /// <summary>
     /// An enumeration of the child sides
