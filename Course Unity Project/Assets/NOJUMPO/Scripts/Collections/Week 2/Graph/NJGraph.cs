@@ -55,6 +55,7 @@ namespace NOJUMPO.Collections
             }
 
             node1.AddNeighbor(node2, edgeWeight);
+            node2.AddNeighbor(node1, edgeWeight);
             return true;
         }
 
@@ -91,6 +92,7 @@ namespace NOJUMPO.Collections
             }
 
             node1.RemoveNeighbor(node2);
+            node2.RemoveNeighbor(node1);
             return true;
         }
 
