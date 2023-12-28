@@ -8,7 +8,6 @@ namespace NOJUMPO
         // -------------------------------- FIELDS ---------------------------------
         readonly NJGraph<int> _intNJGraph = new NJGraph<int>();
 
-
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
             _intNJGraph.AddNode(9);
@@ -20,8 +19,8 @@ namespace NOJUMPO
             _intNJGraph.AddNode(11);
             _intNJGraph.AddNode(17);
 
-            _intNJGraph.AddEdge(9, 5, 37);
             _intNJGraph.AddEdge(9, 11, 32);
+            _intNJGraph.AddEdge(9, 5, 37);
             _intNJGraph.AddEdge(11, 6, 78);
             _intNJGraph.AddEdge(6, 3, 12);
             _intNJGraph.AddEdge(11, 3, 26);
@@ -29,13 +28,14 @@ namespace NOJUMPO
             _intNJGraph.AddEdge(11, 4, 91);
             _intNJGraph.AddEdge(5, 4, 69);
             _intNJGraph.AddEdge(5, 17, 7);
-            _intNJGraph.AddEdge(4, 2, 16);
             _intNJGraph.AddEdge(4, 17, 82);
+            _intNJGraph.AddEdge(4, 2, 16);
         }
 
         void Start() {
             Debug.Log($"{_intNJGraph}");
             Debug.Log(_intNJGraph.Search(9, 2, NJGraphSearchType.DEPTH_FIRST));
+            // Debug.Log(_intNJGraph.Search(9, 2, NJGraphSearchType.BREADTH_FIRST));
             _intNJGraph.RemoveNode(5);
             Debug.Log($"{_intNJGraph}");
             NJGraphNode<int> neighborToLook = _intNJGraph.FindNode(4);
