@@ -1,5 +1,5 @@
-using UnityEngine;
 using NOJUMPO.Collections;
+using UnityEngine;
 
 namespace NOJUMPO
 {
@@ -8,6 +8,7 @@ namespace NOJUMPO
         // -------------------------------- FIELDS ---------------------------------
         readonly NJGraph<int> _intNJGraph = new NJGraph<int>();
 
+        
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
             _intNJGraph.AddNode(9);
@@ -39,8 +40,9 @@ namespace NOJUMPO
             _intNJGraph.RemoveNode(5);
             Debug.Log($"{_intNJGraph}");
             NJGraphNode<int> neighborToLook = _intNJGraph.FindNode(4);
-            int edgeWeight = _intNJGraph.FindNode(11).GetEdgeWeight(neighborToLook);
-            Debug.Log($"Edge Weight Between {_intNJGraph.Nodes[0].Value.ToString()} and {neighborToLook.Value.ToString()} is: {edgeWeight.ToString()}  ");
+            NJGraphNode<int> nodeToLookItsNeighbor = _intNJGraph.FindNode(11);
+            int edgeWeight = nodeToLookItsNeighbor.GetEdgeWeight(neighborToLook);
+            Debug.Log($"Edge Weight Between {nodeToLookItsNeighbor.Value.ToString()} and {neighborToLook.Value.ToString()} is: {edgeWeight.ToString()}  ");
 
             // _intNJGraph.Nodes[6].GetEdgeWeight(neighborToLook);
         }
