@@ -32,7 +32,7 @@ namespace NOJUMPO.Collections
             return null;
         }
 
-        public bool AddNode(NJBinaryTreeNode<T> nodeToAdd, ChildSide childSide) {
+        public bool AddNode(NJBinaryTreeNode<T> nodeToAdd, NJTreeNodeChildSide njTreeNodeChildSide) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
                 return false;
@@ -44,7 +44,7 @@ namespace NOJUMPO.Collections
             }
 
             _nodes.Add(nodeToAdd);
-            return nodeToAdd.Parent.AddChild(nodeToAdd, childSide);
+            return nodeToAdd.Parent.AddChild(nodeToAdd, njTreeNodeChildSide);
         }
 
         public bool RemoveNode(NJBinaryTreeNode<T> nodeToRemove) {

@@ -25,14 +25,14 @@ namespace NOJUMPO.Collections
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        public bool AddChild(NJBinaryTreeNode<T> childToAdd, ChildSide childSide) {
-            if (childSide == ChildSide.LEFT && _leftChild != null ||
-                childSide == ChildSide.RIGHT && _rightChild != null)
+        public bool AddChild(NJBinaryTreeNode<T> childToAdd, NJTreeNodeChildSide njTreeNodeChildSide) {
+            if (njTreeNodeChildSide == NJTreeNodeChildSide.LEFT && _leftChild != null ||
+                njTreeNodeChildSide == NJTreeNodeChildSide.RIGHT && _rightChild != null)
             {
                 return false;
             }
 
-            if (childSide == ChildSide.LEFT)
+            if (njTreeNodeChildSide == NJTreeNodeChildSide.LEFT)
             {
                 _leftChild = childToAdd;
             }

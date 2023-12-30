@@ -41,14 +41,14 @@ namespace NOJUMPO
             NJBinaryTreeNode<char> nodeH = new NJBinaryTreeNode<char>('H', nodeC);
             NJBinaryTreeNode<char> nodeI = new NJBinaryTreeNode<char>('I', nodeH);
 
-            tree.AddNode(nodeB, ChildSide.LEFT);
-            tree.AddNode(nodeC, ChildSide.RIGHT);
-            tree.AddNode(nodeD, ChildSide.LEFT);
-            tree.AddNode(nodeE, ChildSide.RIGHT);
-            tree.AddNode(nodeF, ChildSide.LEFT);
-            tree.AddNode(nodeG, ChildSide.RIGHT);
-            tree.AddNode(nodeH, ChildSide.RIGHT);
-            tree.AddNode(nodeI, ChildSide.LEFT);
+            tree.AddNode(nodeB, NJTreeNodeChildSide.LEFT);
+            tree.AddNode(nodeC, NJTreeNodeChildSide.RIGHT);
+            tree.AddNode(nodeD, NJTreeNodeChildSide.LEFT);
+            tree.AddNode(nodeE, NJTreeNodeChildSide.RIGHT);
+            tree.AddNode(nodeF, NJTreeNodeChildSide.LEFT);
+            tree.AddNode(nodeG, NJTreeNodeChildSide.RIGHT);
+            tree.AddNode(nodeH, NJTreeNodeChildSide.RIGHT);
+            tree.AddNode(nodeI, NJTreeNodeChildSide.LEFT);
 
             return tree;
         }
