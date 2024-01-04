@@ -12,6 +12,7 @@ namespace NOJUMPO.Collections
         NJBinaryTreeNode<T> _root = null;
         List<NJBinaryTreeNode<T>> _nodes = new List<NJBinaryTreeNode<T>>();
 
+
         // ----------------------------- CONSTRUCTORS ------------------------------
         public NJBinaryTree(T value) {
             _root = new NJBinaryTreeNode<T>(value, null);
