@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+using System.Text;
 
 namespace NOJUMPO.Collections
 {
@@ -28,10 +28,73 @@ namespace NOJUMPO.Collections
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
 
+        // O(n)
+        public bool AddChild(MinimaxTreeNode<T> child) {
+            if (_children.Contains(child))
+            {
+                return false;
+            }
 
-        // ------------------------ CUSTOM PROTECTED METHODS ------------------------
+            if (child == this)
+            {
+                return false;
+            }
 
+            child.Parent = this;
+            _children.Add(child);
+            return true;
+        }
 
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+        // O(n)
+        public virtual bool RemoveChild(MinimaxTreeNode<T> child) {
+            if (!_children.Contains(child))
+                return false;
+
+            child.Parent = null;
+            return _children.Remove(child);
+        }
+
+        // O(n)
+        public bool RemoveAllChildren() {
+            for (int i = _children.Count; i >= 0; i--)
+            {
+                _children[i].Parent = null;
+                _children.RemoveAt(i);
+            }
+
+            return true;
+        }
+
+        // O(n)
+        public override string ToString() {
+            StringBuilder treeNodeString = new StringBuilder();
+
+            treeNodeString.Append($"[Node Value: {_value} Parent Value: ");
+
+            if (_parent != null)
+            {
+                treeNodeString.Append($"{_parent._value} ");
+            }
+            else
+            {
+                treeNodeString.Append("null ");
+            }
+
+            treeNodeString.Append("Children Values: ");
+
+            for (int i = 0; i < _children.Count; i++)
+            {
+                treeNodeString.Append($"{_children[i].Value}");
+
+                if (i < _children.Count - 1)
+                {
+                    treeNodeString.Append(", ");
+                }
+            }
+
+            treeNodeString.Append("]");
+
+            return treeNodeString.ToString();
+        }
     }
 }
