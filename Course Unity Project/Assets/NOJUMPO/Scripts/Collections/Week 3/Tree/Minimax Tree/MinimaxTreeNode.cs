@@ -20,7 +20,11 @@ namespace NOJUMPO.Collections
 
 
         // ----------------------------- CONSTRUCTORS ------------------------------
-
+        public MinimaxTreeNode(T value, MinimaxTreeNode<T> parent) {
+            _value = value;
+            _parent = parent;
+            _children = new List<MinimaxTreeNode<T>>();
+        }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
 
