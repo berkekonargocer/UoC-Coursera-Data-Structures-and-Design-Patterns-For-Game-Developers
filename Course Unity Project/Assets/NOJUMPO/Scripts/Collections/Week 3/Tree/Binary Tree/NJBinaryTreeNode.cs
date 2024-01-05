@@ -24,6 +24,7 @@ namespace NOJUMPO.Collections
             _rightChild = null;
         }
 
+
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         public bool AddChild(NJBinaryTreeNode<T> childToAdd, NJTreeNodeChildSide njTreeNodeChildSide) {
             if (njTreeNodeChildSide == NJTreeNodeChildSide.LEFT && _leftChild != null ||

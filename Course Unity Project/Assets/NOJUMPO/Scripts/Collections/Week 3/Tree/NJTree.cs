@@ -12,6 +12,7 @@ namespace NOJUMPO.Collections
         NJTreeNode<T> _root = null;
         List<NJTreeNode<T>> _nodes = new List<NJTreeNode<T>>();
 
+
         // ----------------------------- CONSTRUCTORS ------------------------------
         public NJTree(T value) {
             _root = new NJTreeNode<T>(value, null);
@@ -116,6 +117,7 @@ namespace NOJUMPO.Collections
 
             return treeStringBuilder.ToString();
         }
+
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
 

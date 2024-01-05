@@ -3,26 +3,29 @@ using System.Text;
 
 namespace NOJUMPO.Collections
 {
-    public class NJBinaryTree<T>
+    public class MinimaxTree<T>
     {
         // -------------------------------- FIELDS ---------------------------------
-        public NJBinaryTreeNode<T> Root { get { return _root; } }
+        public MinimaxTreeNode<T> TreeNode { get; set; }
+
         public int Count { get { return _nodes.Count; } }
 
-        NJBinaryTreeNode<T> _root = null;
-        List<NJBinaryTreeNode<T>> _nodes = new List<NJBinaryTreeNode<T>>();
+        MinimaxTreeNode<T> _root = null;
+        List<MinimaxTreeNode<T>> _nodes = new List<MinimaxTreeNode<T>>();
 
 
         // ----------------------------- CONSTRUCTORS ------------------------------
-        public NJBinaryTree(T value) {
-            _root = new NJBinaryTreeNode<T>(value, null);
+        public MinimaxTree(T value) {
+            _root = new MinimaxTreeNode<T>(value, null);
             _nodes.Add(_root);
         }
 
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        public NJBinaryTreeNode<T> Find(T value) {
-            foreach (NJBinaryTreeNode<T> node in _nodes)
+
+        // O(n)
+        public MinimaxTreeNode<T> Find(T value) {
+            foreach (MinimaxTreeNode<T> node in _nodes)
             {
                 if (node.Value.Equals(value))
                 {
@@ -33,23 +36,25 @@ namespace NOJUMPO.Collections
             return null;
         }
 
-        public bool AddNode(NJBinaryTreeNode<T> nodeToAdd, NJTreeNodeChildSide njTreeNodeChildSide) {
+        // O(n)
+        public bool AddNode(MinimaxTreeNode<T> nodeToAdd) {
             if (nodeToAdd?.Parent == null || !_nodes.Contains(nodeToAdd.Parent))
             {
                 return false;
             }
 
-            if (nodeToAdd.Parent.LeftChild == nodeToAdd || nodeToAdd.Parent.RightChild == nodeToAdd)
+            if (nodeToAdd.Parent.Children.Contains(nodeToAdd))
             {
                 return false;
             }
 
             _nodes.Add(nodeToAdd);
-            return nodeToAdd.Parent.AddChild(nodeToAdd, njTreeNodeChildSide);
+            return nodeToAdd.Parent.AddChild(nodeToAdd);
         }
 
-        public bool RemoveNode(NJBinaryTreeNode<T> nodeToRemove) {
-            if (nodeToRemove == null)
+        // O(n²)
+        public bool RemoveNode(MinimaxTreeNode<T> nodeToRemove) {
+            if (nodeToRemove == null || !_nodes.Contains(nodeToRemove))
             {
                 return false;
             }
@@ -74,19 +79,20 @@ namespace NOJUMPO.Collections
                 return false;
             }
 
-            if (nodeToRemove.LeftChild != null)
-            {
-                RemoveNode(nodeToRemove.LeftChild);
-            }
+            if (nodeToRemove.Children.Count <= 0)
+                return true;
 
-            if (nodeToRemove.RightChild != null)
+            IList<MinimaxTreeNode<T>> children = nodeToRemove.Children;
+
+            for (int i = children.Count - 1; i >= 0; i--)
             {
-                RemoveNode(nodeToRemove.RightChild);
+                RemoveNode(children[i]);
             }
 
             return true;
         }
 
+        // O(n)
         public override string ToString() {
             StringBuilder treeStringBuilder = new StringBuilder();
 
@@ -115,14 +121,16 @@ namespace NOJUMPO.Collections
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+
+        // O(n)
         void Clear() {
-            foreach (NJBinaryTreeNode<T> node in _nodes)
+            foreach (MinimaxTreeNode<T> node in _nodes)
             {
                 node.Parent = null;
-                node.RemoveBothChildren();
+                node.RemoveAllChildren();
             }
 
-            for (int i = Count - 1; i >= 0; i--)
+            for (int i = 0; i < Count; i++)
             {
                 _nodes.RemoveAt(i);
             }

@@ -26,6 +26,7 @@ namespace NOJUMPO.Collections
             _children = new List<MinimaxTreeNode<T>>();
         }
 
+
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
 
         // O(n)

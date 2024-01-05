@@ -14,12 +14,14 @@ namespace NOJUMPO.Collections
         NJTreeNode<T> _parent;
         List<NJTreeNode<T>> _children;
 
+
         // ----------------------------- CONSTRUCTORS ------------------------------
         public NJTreeNode(T value, NJTreeNode<T> parent) {
             _value = value;
             _parent = parent;
             _children = new List<NJTreeNode<T>>();
         }
+
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
         
