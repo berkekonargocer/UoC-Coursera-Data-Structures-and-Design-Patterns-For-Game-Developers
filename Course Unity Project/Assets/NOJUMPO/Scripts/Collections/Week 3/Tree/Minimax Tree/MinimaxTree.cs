@@ -7,6 +7,7 @@ namespace NOJUMPO.Collections
     {
         // -------------------------------- FIELDS ---------------------------------
         public MinimaxTreeNode<T> TreeNode { get; set; }
+        public MinimaxTreeNode<T> Root { get { return _root; } }
 
         public int Count { get { return _nodes.Count; } }
 
@@ -106,6 +107,26 @@ namespace NOJUMPO.Collections
             MinimaxConfiguration rootConfiguration = new MinimaxConfiguration(binContents);
 
             MinimaxTree<MinimaxConfiguration> tree = new MinimaxTree<MinimaxConfiguration>(rootConfiguration);
+
+            LinkedList<MinimaxTreeNode<MinimaxConfiguration>> nodeList = new LinkedList<MinimaxTreeNode<MinimaxConfiguration>>();
+
+            nodeList.AddLast(tree.Root);
+
+            while (nodeList.Count > 0)
+            {
+                MinimaxTreeNode<MinimaxConfiguration> currentNode = nodeList.First.Value;
+
+                nodeList.RemoveFirst();
+
+                List<MinimaxConfiguration> children = GetNextConfiguration(currentNode.Value);
+
+                foreach (MinimaxConfiguration child in children)
+                {
+                    MinimaxTreeNode<MinimaxConfiguration> childNode = new MinimaxTreeNode<MinimaxConfiguration>(child, currentNode);
+                    tree.AddNode(childNode);
+                    nodeList.AddLast(childNode);
+                }
+            }
 
             return tree;
         }
