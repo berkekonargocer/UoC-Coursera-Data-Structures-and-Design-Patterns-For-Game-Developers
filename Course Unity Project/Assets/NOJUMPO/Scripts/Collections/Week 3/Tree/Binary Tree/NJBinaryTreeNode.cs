@@ -94,11 +94,5 @@ namespace NOJUMPO.Collections
 
             return binaryTreeNode.ToString();
         }
-
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
-
-
-        // ------------------------- CUSTOM PRIVATE METHODS ------------------------
     }
 }

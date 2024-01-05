@@ -64,11 +64,11 @@ namespace NOJUMPO.Collections
         public override string ToString() {
             StringBuilder treeNodeString = new StringBuilder();
 
-            treeNodeString.Append($"[Node Value: {_value} Parent Value: ");
+            treeNodeString.Append($"[Node Value: {Value} Parent Value: ");
 
             if (_parent != null)
             {
-                treeNodeString.Append($"{_parent._value} ");
+                treeNodeString.Append($"{_parent.Value} ");
             }
             else
             {
