@@ -13,6 +13,9 @@ namespace NOJUMPO.Collections
         MinimaxTreeNode<T> _root = null;
         List<MinimaxTreeNode<T>> _nodes = new List<MinimaxTreeNode<T>>();
 
+        static List<int> binContents = new List<int>();
+        static List<MinimaxConfiguration> newConfiguration = new List<MinimaxConfiguration>();
+
 
         // ----------------------------- CONSTRUCTORS ------------------------------
         public MinimaxTree(T value) {
@@ -92,6 +95,21 @@ namespace NOJUMPO.Collections
             return true;
         }
 
+        public MinimaxTree<MinimaxConfiguration> BuildTree(int[] binItems) {
+            binContents.Clear();
+
+            for (int i = 0; i < binItems.Length; i++)
+            {
+                binContents.Add(binItems[i]);
+            }
+
+            MinimaxConfiguration rootConfiguration = new MinimaxConfiguration(binContents);
+
+            MinimaxTree<MinimaxConfiguration> tree = new MinimaxTree<MinimaxConfiguration>(rootConfiguration);
+
+            return tree;
+        }
+
         // O(n)
         public override string ToString() {
             StringBuilder treeStringBuilder = new StringBuilder();
@@ -121,6 +139,27 @@ namespace NOJUMPO.Collections
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
+        List<MinimaxConfiguration> GetNextConfiguration(MinimaxConfiguration currentConfiguration) {
+            newConfiguration.Clear();
+            IList<int> currentBins = currentConfiguration.Bins;
+
+            for (int i = 0; i < currentBins.Count; i++)
+            {
+                int currentBinCount = currentBins[i];
+                while (currentBinCount > 0)
+                {
+                    currentBinCount--;
+
+                    binContents.Clear();
+                    binContents.AddRange(currentBins);
+                    binContents[i] = currentBinCount;
+
+                    newConfiguration.Add(new MinimaxConfiguration(binContents));
+                }
+            }
+
+            return newConfiguration;
+        }
 
         // O(n)
         void Clear() {
