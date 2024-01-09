@@ -13,25 +13,24 @@ namespace NOJUMPO
 
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
+            int[] bins = { 1, 2 };
+
+            MinimaxTree<BinHolder> minimaxTree = BuildTree(bins);
+            Minimax(minimaxTree.Root, true);
+
+            IList<MinimaxTreeNode<BinHolder>> children = minimaxTree.Root.Children;
+            MinimaxTreeNode<BinHolder> maxChildNode = children[0];
+
+            for (int i = 1; i < children.Count; i++)
+            {
+                if (children[i].MinimaxScore > maxChildNode.MinimaxScore)
+                {
+                    maxChildNode = children[i];
+                }
+            }
+
+            Debug.Log($"Best move is: {maxChildNode.Value}");
         }
-
-        void OnEnable() {
-        }
-
-        void OnDisable() {
-        }
-
-        void Start() {
-        }
-
-        void Update() {
-        }
-
-
-        // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
@@ -43,9 +42,9 @@ namespace NOJUMPO
                 binContents.Add(binItems[i]);
             }
 
-            BinHolder rootConfiguration = new BinHolder(binContents);
+            BinHolder binHolder = new BinHolder(binContents);
 
-            MinimaxTree<BinHolder> tree = new MinimaxTree<BinHolder>(rootConfiguration);
+            MinimaxTree<BinHolder> tree = new MinimaxTree<BinHolder>(binHolder);
 
             LinkedList<MinimaxTreeNode<BinHolder>> nodeList = new LinkedList<MinimaxTreeNode<BinHolder>>();
 
@@ -70,9 +69,9 @@ namespace NOJUMPO
             return tree;
         }
 
-        List<BinHolder> GetNextBinHolder(BinHolder currentConfiguration) {
+        List<BinHolder> GetNextBinHolder(BinHolder currentBinHolder) {
             binHolders.Clear();
-            IList<int> currentBins = currentConfiguration.Bins;
+            IList<int> currentBins = currentBinHolder.Bins;
 
             for (int i = 0; i < currentBins.Count; i++)
             {
@@ -101,7 +100,7 @@ namespace NOJUMPO
                 {
                     Minimax(childNode, !isMaximizing);
                 }
-                
+
                 if (isMaximizing)
                 {
                     node.MinimaxScore = int.MinValue;
