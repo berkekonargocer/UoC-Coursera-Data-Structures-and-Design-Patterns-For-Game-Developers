@@ -14,9 +14,6 @@ namespace NOJUMPO.Collections
         MinimaxTreeNode<T> _root = null;
         List<MinimaxTreeNode<T>> _nodes = new List<MinimaxTreeNode<T>>();
 
-        static List<int> binContents = new List<int>();
-        static List<BinHolder> binHolders = new List<BinHolder>();
-
 
         // ----------------------------- CONSTRUCTORS ------------------------------
         public MinimaxTree(T value) {
@@ -96,41 +93,6 @@ namespace NOJUMPO.Collections
             return true;
         }
 
-        public MinimaxTree<BinHolder> BuildTree(int[] binItems) {
-            binContents.Clear();
-
-            for (int i = 0; i < binItems.Length; i++)
-            {
-                binContents.Add(binItems[i]);
-            }
-
-            BinHolder rootConfiguration = new BinHolder(binContents);
-
-            MinimaxTree<BinHolder> tree = new MinimaxTree<BinHolder>(rootConfiguration);
-
-            LinkedList<MinimaxTreeNode<BinHolder>> nodeList = new LinkedList<MinimaxTreeNode<BinHolder>>();
-
-            nodeList.AddLast(tree.Root);
-
-            while (nodeList.Count > 0)
-            {
-                MinimaxTreeNode<BinHolder> currentNode = nodeList.First.Value;
-
-                nodeList.RemoveFirst();
-
-                List<BinHolder> children = GetNextBinHolder(currentNode.Value);
-
-                foreach (BinHolder child in children)
-                {
-                    MinimaxTreeNode<BinHolder> childNode = new MinimaxTreeNode<BinHolder>(child, currentNode);
-                    tree.AddNode(childNode);
-                    nodeList.AddLast(childNode);
-                }
-            }
-
-            return tree;
-        }
-
         // O(n)
         public override string ToString() {
             StringBuilder treeStringBuilder = new StringBuilder();
@@ -160,27 +122,6 @@ namespace NOJUMPO.Collections
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
-        List<BinHolder> GetNextBinHolder(BinHolder currentConfiguration) {
-            binHolders.Clear();
-            IList<int> currentBins = currentConfiguration.Bins;
-
-            for (int i = 0; i < currentBins.Count; i++)
-            {
-                int currentBinCount = currentBins[i];
-                while (currentBinCount > 0)
-                {
-                    currentBinCount--;
-
-                    binContents.Clear();
-                    binContents.AddRange(currentBins);
-                    binContents[i] = currentBinCount;
-
-                    binHolders.Add(new BinHolder(binContents));
-                }
-            }
-
-            return binHolders;
-        }
 
         // O(n)
         void Clear() {

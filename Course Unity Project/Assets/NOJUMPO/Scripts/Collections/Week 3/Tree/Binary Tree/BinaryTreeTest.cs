@@ -9,8 +9,6 @@ namespace NOJUMPO
         // -------------------------------- FIELDS ---------------------------------
         NJBinaryTree<char> _njBinaryTree;
 
-        // ----------------------------- CONSTRUCTORS ------------------------------
-
 
         // ------------------------- UNITY BUILT-IN METHODS ------------------------
         void Awake() {
@@ -21,11 +19,6 @@ namespace NOJUMPO
             Debug.Log($"{_njBinaryTree}");
             _njBinaryTree.PreOrderTraversal(_njBinaryTree.Root);
         }
-
-        // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-
-
-        // ------------------------ CUSTOM PROTECTED METHODS -----------------------
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
