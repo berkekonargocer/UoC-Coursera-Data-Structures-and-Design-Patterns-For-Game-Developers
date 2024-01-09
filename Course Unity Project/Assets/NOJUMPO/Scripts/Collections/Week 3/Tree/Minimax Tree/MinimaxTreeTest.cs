@@ -132,7 +132,21 @@ namespace NOJUMPO
             }
             else
             {
-                // Assign Minimax Score
+                AssignMinimaxScore(node, isMaximizing);
+            }
+        }
+
+        void AssignMinimaxScore(MinimaxTreeNode<BinHolder> node, bool isMaximizing) {
+            if (node.Value.IsEmpty)
+            {
+                if (isMaximizing)
+                {
+                    node.MinimaxScore = 1;
+                }
+                else
+                {
+                    node.MinimaxScore = 0;
+                }
             }
         }
     }
