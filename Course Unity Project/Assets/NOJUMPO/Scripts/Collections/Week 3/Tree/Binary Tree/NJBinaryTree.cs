@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace NOJUMPO.Collections
 {
@@ -85,6 +86,62 @@ namespace NOJUMPO.Collections
             }
 
             return true;
+        }
+
+        public void PreOrderTraversal(NJBinaryTreeNode<T> node) {
+            if (node == null)
+                return;
+
+            Debug.Log($"{node.Value} ");
+
+            if (node.LeftChild != null)
+            {
+                PreOrderTraversal(node.LeftChild);
+            }
+            if (node.RightChild != null)
+            {
+                PreOrderTraversal(node.RightChild);
+            }
+        }
+
+        public void InOrderTraversal(NJBinaryTreeNode<T> node) {
+            if (node == null)
+                return;
+
+            if (node.LeftChild != null)
+            {
+                PreOrderTraversal(node.LeftChild);
+            }
+
+            Debug.Log($"{node.Value} ");
+
+            if (node.RightChild != null)
+            {
+                PreOrderTraversal(node.RightChild);
+            }
+        }
+
+        public void PostOrderTraversal(NJBinaryTreeNode<T> node) {
+            if (node == null)
+                return;
+
+            if (node.LeftChild != null)
+            {
+                PostOrderTraversal(node.LeftChild);
+            }
+            if (node.RightChild != null)
+            {
+                PostOrderTraversal(node.RightChild);
+            }
+
+            Debug.Log($"{node.Value} ");
+        }
+
+        public void BreadthFirstTraversal(NJBinaryTreeNode<T> node) {
+            if (node == null)
+                return;
+
+            LinkedList<NJBinaryTreeNode<char>> searchList = new LinkedList<NJBinaryTreeNode<char>>();
         }
 
         public override string ToString() {

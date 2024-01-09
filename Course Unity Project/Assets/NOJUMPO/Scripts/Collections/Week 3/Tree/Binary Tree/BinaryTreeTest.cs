@@ -19,7 +19,7 @@ namespace NOJUMPO
 
         void Start() {
             Debug.Log($"{_njBinaryTree}");
-            PreOrderTraversal(_njBinaryTree.Root);
+            _njBinaryTree.PreOrderTraversal(_njBinaryTree.Root);
         }
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
@@ -51,62 +51,6 @@ namespace NOJUMPO
             tree.AddNode(nodeI, NJTreeNodeChildSide.LEFT);
 
             return tree;
-        }
-
-        void PreOrderTraversal(NJBinaryTreeNode<char> node) {
-            if (node == null)
-                return;
-            
-            Debug.Log($"{node.Value} ");
-
-            if (node.LeftChild != null)
-            {
-                PreOrderTraversal(node.LeftChild);
-            }
-            if (node.RightChild != null)
-            {
-                PreOrderTraversal(node.RightChild);
-            }
-        }
-        
-        void InOrderTraversal(NJBinaryTreeNode<char> node) {
-            if (node == null)
-                return;
-
-            if (node.LeftChild != null)
-            {
-                PreOrderTraversal(node.LeftChild);
-            }
-            
-            Debug.Log($"{node.Value} ");
-            
-            if (node.RightChild != null)
-            {
-                PreOrderTraversal(node.RightChild);
-            }
-        }
-
-        void PostOrderTraversal(NJBinaryTreeNode<char> node) {
-            if (node == null)
-                return;
-
-            if (node.LeftChild != null)
-            {
-                PostOrderTraversal(node.LeftChild);
-            }
-            if (node.RightChild != null)
-            {
-                PostOrderTraversal(node.RightChild);
-            }
-                
-            Debug.Log($"{node.Value} ");
-        }
-
-        void BreadthFirstTraversal(NJBinaryTreeNode<char> node) {
-            if (node == null)
-                return;
-
-            LinkedList<NJBinaryTreeNode<char>> searchList = new LinkedList<NJBinaryTreeNode<char>>();
         }
     }
 }
