@@ -91,5 +91,49 @@ namespace NOJUMPO
 
             return binHolders;
         }
+
+        void Minimax(MinimaxTreeNode<BinHolder> node, bool isMaximizing) {
+            IList<MinimaxTreeNode<BinHolder>> children = node.Children;
+
+            if (children.Count > 0)
+            {
+                foreach (MinimaxTreeNode<BinHolder> childNode in children)
+                {
+                    Minimax(childNode, !isMaximizing);
+                }
+                
+                if (isMaximizing)
+                {
+                    node.MinimaxScore = int.MinValue;
+                }
+                else
+                {
+                    node.MinimaxScore = int.MaxValue;
+                }
+
+
+                foreach (MinimaxTreeNode<BinHolder> childNode in children)
+                {
+                    if (isMaximizing)
+                    {
+                        if (childNode.MinimaxScore > node.MinimaxScore)
+                        {
+                            node.MinimaxScore = childNode.MinimaxScore;
+                        }
+                    }
+                    else
+                    {
+                        if (childNode.MinimaxScore < node.MinimaxScore)
+                        {
+                            node.MinimaxScore = childNode.MinimaxScore;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Assign Minimax Score
+            }
+        }
     }
 }
