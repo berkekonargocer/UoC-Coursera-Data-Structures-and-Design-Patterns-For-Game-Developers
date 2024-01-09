@@ -9,8 +9,10 @@ namespace NOJUMPO.Collections
         public T Value { get { return _value; } }
         public NJTreeNode<T> Parent { get { return _parent; } set { _parent = value; } }
         public IList<NJTreeNode<T>> Children { get { return _children.AsReadOnly(); } }
+        public int Count { get { return _count; } set { _count = value; } }
 
         T _value;
+        int _count;
         NJTreeNode<T> _parent;
         List<NJTreeNode<T>> _children;
 
@@ -24,7 +26,7 @@ namespace NOJUMPO.Collections
 
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
-        
+
         // O(n)
         public bool AddChild(NJTreeNode<T> child) {
             if (_children.Contains(child))
