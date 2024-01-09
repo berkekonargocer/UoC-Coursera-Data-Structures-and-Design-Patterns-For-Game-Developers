@@ -15,7 +15,7 @@ namespace NOJUMPO.Collections
         List<MinimaxTreeNode<T>> _nodes = new List<MinimaxTreeNode<T>>();
 
         static List<int> binContents = new List<int>();
-        static List<MinimaxConfiguration> newConfiguration = new List<MinimaxConfiguration>();
+        static List<BinHolder> binHolders = new List<BinHolder>();
 
 
         // ----------------------------- CONSTRUCTORS ------------------------------
@@ -96,7 +96,7 @@ namespace NOJUMPO.Collections
             return true;
         }
 
-        public MinimaxTree<MinimaxConfiguration> BuildTree(int[] binItems) {
+        public MinimaxTree<BinHolder> BuildTree(int[] binItems) {
             binContents.Clear();
 
             for (int i = 0; i < binItems.Length; i++)
@@ -104,25 +104,25 @@ namespace NOJUMPO.Collections
                 binContents.Add(binItems[i]);
             }
 
-            MinimaxConfiguration rootConfiguration = new MinimaxConfiguration(binContents);
+            BinHolder rootConfiguration = new BinHolder(binContents);
 
-            MinimaxTree<MinimaxConfiguration> tree = new MinimaxTree<MinimaxConfiguration>(rootConfiguration);
+            MinimaxTree<BinHolder> tree = new MinimaxTree<BinHolder>(rootConfiguration);
 
-            LinkedList<MinimaxTreeNode<MinimaxConfiguration>> nodeList = new LinkedList<MinimaxTreeNode<MinimaxConfiguration>>();
+            LinkedList<MinimaxTreeNode<BinHolder>> nodeList = new LinkedList<MinimaxTreeNode<BinHolder>>();
 
             nodeList.AddLast(tree.Root);
 
             while (nodeList.Count > 0)
             {
-                MinimaxTreeNode<MinimaxConfiguration> currentNode = nodeList.First.Value;
+                MinimaxTreeNode<BinHolder> currentNode = nodeList.First.Value;
 
                 nodeList.RemoveFirst();
 
-                List<MinimaxConfiguration> children = GetNextConfiguration(currentNode.Value);
+                List<BinHolder> children = GetNextBinHolder(currentNode.Value);
 
-                foreach (MinimaxConfiguration child in children)
+                foreach (BinHolder child in children)
                 {
-                    MinimaxTreeNode<MinimaxConfiguration> childNode = new MinimaxTreeNode<MinimaxConfiguration>(child, currentNode);
+                    MinimaxTreeNode<BinHolder> childNode = new MinimaxTreeNode<BinHolder>(child, currentNode);
                     tree.AddNode(childNode);
                     nodeList.AddLast(childNode);
                 }
@@ -160,8 +160,8 @@ namespace NOJUMPO.Collections
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
-        List<MinimaxConfiguration> GetNextConfiguration(MinimaxConfiguration currentConfiguration) {
-            newConfiguration.Clear();
+        List<BinHolder> GetNextBinHolder(BinHolder currentConfiguration) {
+            binHolders.Clear();
             IList<int> currentBins = currentConfiguration.Bins;
 
             for (int i = 0; i < currentBins.Count; i++)
@@ -175,11 +175,11 @@ namespace NOJUMPO.Collections
                     binContents.AddRange(currentBins);
                     binContents[i] = currentBinCount;
 
-                    newConfiguration.Add(new MinimaxConfiguration(binContents));
+                    binHolders.Add(new BinHolder(binContents));
                 }
             }
 
-            return newConfiguration;
+            return binHolders;
         }
 
         // O(n)

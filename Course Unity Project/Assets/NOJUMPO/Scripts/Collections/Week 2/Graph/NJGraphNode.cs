@@ -8,7 +8,7 @@ namespace NOJUMPO.Collections
     {
         // -------------------------------- FIELDS ---------------------------------
         public T Value { get { return _value; } }
-        public IDictionary<NJGraphNode<T>, int> Neighbors { get { return _neighbors; } }
+        public Dictionary<NJGraphNode<T>, int> Neighbors { get { return _neighbors; } }
 
         T _value;
         Dictionary<NJGraphNode<T>, int> _neighbors;
