@@ -15,11 +15,11 @@ namespace NOJUMPO
         void Awake() {
             int[] bins = { 1, 2 };
 
-            MinimaxTree<BinHolder> minimaxTree = BuildTree(bins);
+            NJMinimaxTree<BinHolder> minimaxTree = BuildTree(bins);
             Minimax(minimaxTree.Root, true);
 
-            IList<MinimaxTreeNode<BinHolder>> children = minimaxTree.Root.Children;
-            MinimaxTreeNode<BinHolder> maxChildNode = children[0];
+            IList<NJMinimaxTreeNode<BinHolder>> children = minimaxTree.Root.Children;
+            NJMinimaxTreeNode<BinHolder> maxChildNode = children[0];
 
             for (int i = 1; i < children.Count; i++)
             {
@@ -34,7 +34,7 @@ namespace NOJUMPO
 
 
         // ------------------------- CUSTOM PRIVATE METHODS ------------------------
-        MinimaxTree<BinHolder> BuildTree(int[] binItems) {
+        NJMinimaxTree<BinHolder> BuildTree(int[] binItems) {
             binContents.Clear();
 
             for (int i = 0; i < binItems.Length; i++)
@@ -44,15 +44,15 @@ namespace NOJUMPO
 
             BinHolder binHolder = new BinHolder(binContents);
 
-            MinimaxTree<BinHolder> tree = new MinimaxTree<BinHolder>(binHolder);
+            NJMinimaxTree<BinHolder> tree = new NJMinimaxTree<BinHolder>(binHolder);
 
-            LinkedList<MinimaxTreeNode<BinHolder>> nodeList = new LinkedList<MinimaxTreeNode<BinHolder>>();
+            LinkedList<NJMinimaxTreeNode<BinHolder>> nodeList = new LinkedList<NJMinimaxTreeNode<BinHolder>>();
 
             nodeList.AddLast(tree.Root);
 
             while (nodeList.Count > 0)
             {
-                MinimaxTreeNode<BinHolder> currentNode = nodeList.First.Value;
+                NJMinimaxTreeNode<BinHolder> currentNode = nodeList.First.Value;
 
                 nodeList.RemoveFirst();
 
@@ -60,7 +60,7 @@ namespace NOJUMPO
 
                 foreach (BinHolder child in children)
                 {
-                    MinimaxTreeNode<BinHolder> childNode = new MinimaxTreeNode<BinHolder>(child, currentNode);
+                    NJMinimaxTreeNode<BinHolder> childNode = new NJMinimaxTreeNode<BinHolder>(child, currentNode);
                     tree.AddNode(childNode);
                     nodeList.AddLast(childNode);
                 }
@@ -91,12 +91,12 @@ namespace NOJUMPO
             return binHolders;
         }
 
-        void Minimax(MinimaxTreeNode<BinHolder> node, bool isMaximizing) {
-            IList<MinimaxTreeNode<BinHolder>> children = node.Children;
+        void Minimax(NJMinimaxTreeNode<BinHolder> node, bool isMaximizing) {
+            IList<NJMinimaxTreeNode<BinHolder>> children = node.Children;
 
             if (children.Count > 0)
             {
-                foreach (MinimaxTreeNode<BinHolder> childNode in children)
+                foreach (NJMinimaxTreeNode<BinHolder> childNode in children)
                 {
                     Minimax(childNode, !isMaximizing);
                 }
@@ -111,7 +111,7 @@ namespace NOJUMPO
                 }
 
 
-                foreach (MinimaxTreeNode<BinHolder> childNode in children)
+                foreach (NJMinimaxTreeNode<BinHolder> childNode in children)
                 {
                     if (isMaximizing)
                     {
@@ -135,7 +135,7 @@ namespace NOJUMPO
             }
         }
 
-        void AssignMinimaxScore(MinimaxTreeNode<BinHolder> node, bool isMaximizing) {
+        void AssignMinimaxScore(NJMinimaxTreeNode<BinHolder> node, bool isMaximizing) {
             if (node.Value.IsEmpty)
             {
                 if (isMaximizing)
