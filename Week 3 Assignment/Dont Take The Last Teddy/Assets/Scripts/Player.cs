@@ -59,14 +59,13 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     //}
 
     #endregion
-	
+
     /// <summary>
     /// Awake is called before Start
     /// </summary>
-    void Awake()
-	{
+    void Awake() {
         // set name
-		if (CompareTag("Player1"))
+        if (CompareTag("Player1"))
         {
             myName = PlayerName.Player1;
         }
@@ -83,7 +82,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
         // register as invoker and listener
         EventManager.AddTurnOverInvoker(this);
         EventManager.AddTakeTurnListener(HandleTakeTurnEvent);
-	}
+    }
 
     /// <summary>
     /// Gets and sets the difficulty for the player
@@ -117,8 +116,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="listener">listener</param>
     public void AddTurnOverListener(
-        UnityAction<PlayerName, Configuration> listener)
-    {
+        UnityAction<PlayerName, Configuration> listener) {
         turnOverEvent.AddListener(listener);
     }
 
@@ -128,8 +126,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="player">whose turn it is</param>
     /// <param name="boardConfiguration">current board configuration</param>
     void HandleTakeTurnEvent(PlayerName player,
-        Configuration boardConfiguration)
-    {
+        Configuration boardConfiguration) {
         // only take turn if it's our turn
         if (player == myName)
         {
@@ -144,8 +141,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="boardConfiguration">current board configuration</param>
     /// <returns>tree</returns>
     MinimaxTree<Configuration> BuildTree(
-        Configuration boardConfiguration)
-    {
+        Configuration boardConfiguration) {
         // build tree to appropriate depth
         MinimaxTree<Configuration> tree =
             new MinimaxTree<Configuration>(boardConfiguration);
@@ -160,16 +156,26 @@ public class Player : MonoBehaviour, ITurnOverInvoker
                 GetNextConfigurations(currentNode.Value);
             foreach (Configuration child in children)
             {
-                // STUDENTS: only add to tree if within search depth
-
-                MinimaxTreeNode<Configuration> childNode =
-                    new MinimaxTreeNode<Configuration>(
-                        child, currentNode);
-                tree.AddNode(childNode);
-                nodeList.AddLast(childNode);
+                if (GetNodeDepth(currentNode) < searchDepth)
+                {
+                    MinimaxTreeNode<Configuration> childNode = new MinimaxTreeNode<Configuration>(child, currentNode);
+                    tree.AddNode(childNode);
+                    nodeList.AddLast(childNode);
+                }
             }
         }
         return tree;
+    }
+
+    int GetNodeDepth(MinimaxTreeNode<Configuration> node) {
+        int depth = 0;
+        MinimaxTreeNode<Configuration> currentNode = node;
+        while (currentNode.Parent != null)
+        {
+            depth++;
+            currentNode = currentNode.Parent;
+        }
+        return depth;
     }
 
     /// <summary>
@@ -177,8 +183,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// 
     /// Leave public to support automated grading
     /// </summary>
-    public void HandleThinkingTimerFinished()
-    {
+    public void HandleThinkingTimerFinished() {
         // do the search and pick the move
         Minimax(tree.Root, true);
 
@@ -205,8 +210,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="currentConfiguration">current configuration</param>
     /// <returns>list of next configurations</returns>
     List<Configuration> GetNextConfigurations(
-        Configuration currentConfiguration)
-    {
+        Configuration currentConfiguration) {
         newConfigurations.Clear();
         IList<int> currentBins = currentConfiguration.Bins;
         for (int i = 0; i < currentBins.Count; i++)
@@ -234,8 +238,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="tree">tree to mark with scores</param>
     /// <param name="maximizing">whether or not we're maximizing</param>
     void Minimax(MinimaxTreeNode<Configuration> tree,
-        bool maximizing)
-    {
+        bool maximizing) {
         // recurse on children
         IList<MinimaxTreeNode<Configuration>> children = tree.Children;
         if (children.Count > 0)
@@ -290,8 +293,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="node">node to mark with score</param> 
     /// <param name="maximizing">whether or not we're maximizing</param>
     void AssignEndOfGameMinimaxScore(MinimaxTreeNode<Configuration> node,
-        bool maximizing)
-    {
+        bool maximizing) {
         if (maximizing)
         {
             // other player took the last teddy
@@ -303,7 +305,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
             node.MinimaxScore = 0;
         }
     }
-        
+
     /// <summary>
     /// Assigns a heuristic minimax score to the given node
     /// </summary>
@@ -311,8 +313,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="maximizing">whether or not we're maximizing</param>
     void AssignHeuristicMinimaxScore(
         MinimaxTreeNode<Configuration> node,
-        bool maximizing)
-    {
+        bool maximizing) {
         // might have reached an end-of-game configuration
         if (node.Value.Empty)
         {
@@ -322,6 +323,6 @@ public class Player : MonoBehaviour, ITurnOverInvoker
         {
             // use a heuristic evaluation function to score the node
             node.MinimaxScore = 0.5f;
-		}
+        }
     }
 }
