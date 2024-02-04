@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, ITurnOverInvoker
 {
     PlayerName myName;
-    Timer thinkingTimer;
+    ThinkingTimer thinkingTimer;
 
     // minimax search support
     Difficulty difficulty;
@@ -41,12 +41,11 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="name">player name</param>
     /// <param name="gameObject">the game object the script is attached to</param>
     public Player(PlayerName name, GameObject gameObject) :
-        base(gameObject)
-    {
+        base(gameObject) {
         // set name
         myName = name;
 
-        // initialization code from Awake
+        //    // initialization code from Awake
 
         // add timer component
         thinkingTimer = gameObject.AddComponent<ThinkingTimer>();
@@ -63,27 +62,26 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <summary>
     /// Awake is called before Start
     /// </summary>
- //   void Awake()
-	//{
- //       // set name
-	//	if (CompareTag("Player1"))
- //       {
- //           myName = PlayerName.Player1;
- //       }
- //       else
- //       {
- //           myName = PlayerName.Player2;
- //       }
+    //void Awake() {
+    //    // set name
+    //    if (CompareTag("Player1"))
+    //    {
+    //        myName = PlayerName.Player1;
+    //    }
+    //    else
+    //    {
+    //        myName = PlayerName.Player2;
+    //    }
 
- //       // add timer component
- //       thinkingTimer = gameObject.AddComponent<Timer>();
- //       thinkingTimer.Duration = GameConstants.AiThinkSeconds;
- //       thinkingTimer.AddTimerFinishedListener(HandleThinkingTimerFinished);
+    //    // add timer component
+    //    thinkingTimer = gameObject.AddComponent<Timer>();
+    //    thinkingTimer.Duration = GameConstants.AiThinkSeconds;
+    //    thinkingTimer.AddTimerFinishedListener(HandleThinkingTimerFinished);
 
- //       // register as invoker and listener
- //       EventManager.AddTurnOverInvoker(this);
- //       EventManager.AddTakeTurnListener(HandleTakeTurnEvent);
-	//}
+    //    // register as invoker and listener
+    //    EventManager.AddTurnOverInvoker(this);
+    //    EventManager.AddTakeTurnListener(HandleTakeTurnEvent);
+    //}
 
     /// <summary>
     /// Gets and sets the difficulty for the player
@@ -117,8 +115,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="listener">listener</param>
     public void AddTurnOverListener(
-        UnityAction<PlayerName, Configuration> listener)
-    {
+        UnityAction<PlayerName, Configuration> listener) {
         turnOverEvent.AddListener(listener);
     }
 
@@ -128,8 +125,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="player">whose turn it is</param>
     /// <param name="boardConfiguration">current board configuration</param>
     void HandleTakeTurnEvent(PlayerName player,
-        Configuration boardConfiguration)
-    {
+        Configuration boardConfiguration) {
         // only take turn if it's our turn
         if (player == myName)
         {
@@ -143,33 +139,45 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="boardConfiguration">current board configuration</param>
     /// <returns>tree</returns>
-    MinimaxTree<Configuration> BuildTree(
-        Configuration boardConfiguration)
-    {
+    MinimaxTree<Configuration> BuildTree(Configuration boardConfiguration) {
+
         // build tree to appropriate depth
         MinimaxTree<Configuration> tree =
             new MinimaxTree<Configuration>(boardConfiguration);
         nodeList.Clear();
         nodeList.AddLast(tree.Root);
+
         while (nodeList.Count > 0)
         {
-            MinimaxTreeNode<Configuration> currentNode =
-                nodeList.First.Value;
+            MinimaxTreeNode<Configuration> currentNode = nodeList.First.Value;
             nodeList.RemoveFirst();
-            List<Configuration> children =
-                GetNextConfigurations(currentNode.Value);
+            List<Configuration> children = GetNextConfigurations(currentNode.Value);
+
             foreach (Configuration child in children)
             {
-                // STUDENTS: only add to tree if within search depth
-
-                MinimaxTreeNode<Configuration> childNode =
-                    new MinimaxTreeNode<Configuration>(
-                        child, currentNode);
-                tree.AddNode(childNode);
-                nodeList.AddLast(childNode);
+                if (GetNodeDepth(currentNode) < searchDepth)
+                {
+                    MinimaxTreeNode<Configuration> childNode = new MinimaxTreeNode<Configuration>(child, currentNode);
+                    tree.AddNode(childNode);
+                    nodeList.AddLast(childNode);
+                }
             }
         }
+
         return tree;
+    }
+
+    int GetNodeDepth(MinimaxTreeNode<Configuration> node) {
+
+        int depth = 0;
+        MinimaxTreeNode<Configuration> currentNode = node;
+
+        while (currentNode.Parent != null)
+        {
+            depth++;
+            currentNode = currentNode.Parent;
+        }
+        return depth;
     }
 
     /// <summary>
@@ -177,8 +185,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// 
     /// Leave public to support automated grading
     /// </summary>
-    public void HandleThinkingTimerFinished()
-    {
+    public void HandleThinkingTimerFinished() {
         // do the search and pick the move
         Minimax(tree.Root, true);
 
@@ -205,8 +212,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="currentConfiguration">current configuration</param>
     /// <returns>list of next configurations</returns>
     List<Configuration> GetNextConfigurations(
-        Configuration currentConfiguration)
-    {
+        Configuration currentConfiguration) {
         newConfigurations.Clear();
         IList<int> currentBins = currentConfiguration.Bins;
         for (int i = 0; i < currentBins.Count; i++)
@@ -234,8 +240,7 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// <param name="tree">tree to mark with scores</param>
     /// <param name="maximizing">whether or not we're maximizing</param>
     void Minimax(MinimaxTreeNode<Configuration> tree,
-        bool maximizing)
-    {
+        bool maximizing) {
         // recurse on children
         IList<MinimaxTreeNode<Configuration>> children = tree.Children;
         if (children.Count > 0)
@@ -289,39 +294,78 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="node">node to mark with score</param> 
     /// <param name="maximizing">whether or not we're maximizing</param>
-    void AssignEndOfGameMinimaxScore(MinimaxTreeNode<Configuration> node,
-        bool maximizing)
-    {
+    void AssignEndOfGameMinimaxScore(MinimaxTreeNode<Configuration> node, bool maximizing) {
         if (maximizing)
         {
             // other player took the last teddy
             node.MinimaxScore = 1;
+            return;
         }
-        else
-        {
-            // we took the last teddy
-            node.MinimaxScore = 0;
-        }
+
+        // we took the last teddy
+        node.MinimaxScore = 0;
     }
-        
+
     /// <summary>
     /// Assigns a heuristic minimax score to the given node
     /// </summary>
     /// <param name="node">node to mark with score</param>
     /// <param name="maximizing">whether or not we're maximizing</param>
-    void AssignHeuristicMinimaxScore(
-        MinimaxTreeNode<Configuration> node,
-        bool maximizing)
-    {
+    void AssignHeuristicMinimaxScore(MinimaxTreeNode<Configuration> node, bool maximizing) {
+
         // might have reached an end-of-game configuration
         if (node.Value.Empty)
         {
             AssignEndOfGameMinimaxScore(node, maximizing);
+            return;
         }
-        else
+
+        // use a heuristic evaluation function to score the node
+
+        List<int> nonEmptyBins = node.Value.NonEmptyBins;
+
+        if (nonEmptyBins.Count == 2 && (nonEmptyBins[0] == 1 || nonEmptyBins[1] == 1))
         {
-            // use a heuristic evaluation function to score the node
-            node.MinimaxScore = 0.5f;
-		}
+            if (maximizing)
+            {
+                node.MinimaxScore = 1;
+            }
+            else
+            {
+                node.MinimaxScore = 0;
+            }
+
+            return;
+        }
+
+        if (nonEmptyBins.Count % 2 == 1)
+        {
+            if (maximizing)
+            {
+                node.MinimaxScore = 0.75f;
+            }
+            else
+            {
+                node.MinimaxScore = 0.25f;
+            }
+
+            return;
+        }
+
+        if (node.Value.NumBears % 2 == 0)
+        {
+            if (maximizing)
+            {
+                node.MinimaxScore = 0.75f;
+            }
+            else
+            {
+                node.MinimaxScore = 0.25f;
+            }
+
+            return;
+        }
+
+        node.MinimaxScore = 0.5f;
     }
 }

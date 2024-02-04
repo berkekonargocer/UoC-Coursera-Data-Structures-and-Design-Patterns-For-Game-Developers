@@ -140,20 +140,20 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="boardConfiguration">current board configuration</param>
     /// <returns>tree</returns>
-    MinimaxTree<Configuration> BuildTree(
-        Configuration boardConfiguration) {
+    MinimaxTree<Configuration> BuildTree(Configuration boardConfiguration) {
+
         // build tree to appropriate depth
         MinimaxTree<Configuration> tree =
             new MinimaxTree<Configuration>(boardConfiguration);
         nodeList.Clear();
         nodeList.AddLast(tree.Root);
+
         while (nodeList.Count > 0)
         {
-            MinimaxTreeNode<Configuration> currentNode =
-                nodeList.First.Value;
+            MinimaxTreeNode<Configuration> currentNode = nodeList.First.Value;
             nodeList.RemoveFirst();
-            List<Configuration> children =
-                GetNextConfigurations(currentNode.Value);
+            List<Configuration> children = GetNextConfigurations(currentNode.Value);
+
             foreach (Configuration child in children)
             {
                 if (GetNodeDepth(currentNode) < searchDepth)
@@ -164,12 +164,15 @@ public class Player : MonoBehaviour, ITurnOverInvoker
                 }
             }
         }
+
         return tree;
     }
 
     int GetNodeDepth(MinimaxTreeNode<Configuration> node) {
+
         int depth = 0;
         MinimaxTreeNode<Configuration> currentNode = node;
+
         while (currentNode.Parent != null)
         {
             depth++;
@@ -292,18 +295,16 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="node">node to mark with score</param> 
     /// <param name="maximizing">whether or not we're maximizing</param>
-    void AssignEndOfGameMinimaxScore(MinimaxTreeNode<Configuration> node,
-        bool maximizing) {
+    void AssignEndOfGameMinimaxScore(MinimaxTreeNode<Configuration> node, bool maximizing) {
         if (maximizing)
         {
             // other player took the last teddy
             node.MinimaxScore = 1;
+            return;
         }
-        else
-        {
-            // we took the last teddy
-            node.MinimaxScore = 0;
-        }
+
+        // we took the last teddy
+        node.MinimaxScore = 0;
     }
 
     /// <summary>
@@ -311,18 +312,61 @@ public class Player : MonoBehaviour, ITurnOverInvoker
     /// </summary>
     /// <param name="node">node to mark with score</param>
     /// <param name="maximizing">whether or not we're maximizing</param>
-    void AssignHeuristicMinimaxScore(
-        MinimaxTreeNode<Configuration> node,
-        bool maximizing) {
+    void AssignHeuristicMinimaxScore(MinimaxTreeNode<Configuration> node, bool maximizing) {
+
         // might have reached an end-of-game configuration
         if (node.Value.Empty)
         {
             AssignEndOfGameMinimaxScore(node, maximizing);
+            return;
         }
-        else
+
+        // use a heuristic evaluation function to score the node
+
+        List<int> nonEmptyBins = node.Value.NonEmptyBins;
+
+        if (nonEmptyBins.Count == 2 && (nonEmptyBins[0] == 1 || nonEmptyBins[1] == 1))
         {
-            // use a heuristic evaluation function to score the node
-            node.MinimaxScore = 0.5f;
+            if (maximizing)
+            {
+                node.MinimaxScore = 1;
+            }
+            else
+            {
+                node.MinimaxScore = 0;
+            }
+
+            return;
         }
+
+        if (nonEmptyBins.Count % 2 == 1)
+        {
+            if (maximizing)
+            {
+                node.MinimaxScore = 0.75f;
+            }
+            else
+            {
+                node.MinimaxScore = 0.25f;
+            }
+
+            return;
+        }
+
+        if (node.Value.NumBears % 2 == 0)
+        {
+            if (maximizing)
+            {
+                node.MinimaxScore = 0.75f;
+            }
+            else
+            {
+                node.MinimaxScore = 0.25f;
+            }
+
+            return;
+        }
+
+        node.MinimaxScore = 0.5f;
     }
 }

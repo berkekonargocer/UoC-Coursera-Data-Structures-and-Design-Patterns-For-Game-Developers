@@ -80,9 +80,7 @@ public static class EventManager
     /// Adds the parameter as a TurnOver event listener
     /// </summary>
     /// <param name="listener">listener</param>
-    public static void AddTurnOverListener(
-        UnityAction<PlayerName, Configuration> listener)
-    {
+    public static void AddTurnOverListener(UnityAction<PlayerName, Configuration> listener) {
         turnOverListeners.Add(listener);
         foreach (ITurnOverInvoker invoker in turnOverInvokers)
         {

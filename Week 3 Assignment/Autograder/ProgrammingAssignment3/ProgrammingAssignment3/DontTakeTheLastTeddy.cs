@@ -39,8 +39,7 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
     /// </summary>
     /// <param name="gameObject">the game object the script is attached to</param>
     public DontTakeTheLastTeddy(GameObject gameObject) :
-        base(gameObject)
-    {
+        base(gameObject) {
     }
 
     #endregion
@@ -50,8 +49,7 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
     /// 
     /// Leave this method public to support automated grading
     /// </summary>
-    public void Awake()
-    {
+    public void Awake() {
         // retrieve board and player references
         board = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
         player1 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Player>();
@@ -60,12 +58,12 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
         // register as invoker and listener
         EventManager.AddTakeTurnInvoker(this);
         EventManager.AddGameOverInvoker(this);
-		EventManager.AddGameStartingInvoker(this);
+        EventManager.AddGameStartingInvoker(this);
         EventManager.AddTurnOverListener(HandleTurnOverEvent);
-		
+
         // set up timer for delay between games
         newGameDelayTimer = gameObject.AddComponent<Timer>();
-        newGameDelayTimer.Duration = 1;
+        newGameDelayTimer.Duration = 0.01f;
         newGameDelayTimer.AddTimerFinishedListener(HandleTimerFinishedEvent);
 
         // initialize statistics class
@@ -75,8 +73,7 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    void Start()
-	{
+    void Start() {
         StartGame(PlayerName.Player1, Difficulty.Hard, Difficulty.Hard);
     }
 
@@ -153,6 +150,8 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
             {
                 gameOverEvent.Invoke(PlayerName.Player1, player1.Difficulty, player2.Difficulty);
             }
+
+            newGameDelayTimer.Run();
         }
         else
         {
@@ -182,9 +181,7 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
             {
                 if (gamesPlayed % 100 == 0)
                 {
-                    // uncomment the line below and implement a
-                    // SetPlayerDifficulties method
-                    //SetPlayerDifficulties(gamesPlayed);
+                    SetPlayerDifficulties(gamesPlayed);
                 }
 
                 gamesPlayed++;
@@ -206,6 +203,32 @@ public class DontTakeTheLastTeddy : MonoBehaviour, ITakeTurnInvoker, IGameOverIn
                 // move to statistics scene when all games have been played
                 SceneManager.LoadScene("statistics");
             }
+        }
+    }
+
+    void SetPlayerDifficulties(int gamesPlayed) {
+        switch (gamesPlayed)
+        {
+            case 100:
+                player1.Difficulty = Difficulty.Medium;
+                player2.Difficulty = Difficulty.Medium;
+                break;
+            case 200:
+                player1.Difficulty = Difficulty.Hard;
+                player2.Difficulty = Difficulty.Hard;
+                break;
+            case 300:
+                player1.Difficulty = Difficulty.Easy;
+                player2.Difficulty = Difficulty.Medium;
+                break;
+            case 400:
+                player1.Difficulty = Difficulty.Easy;
+                player2.Difficulty = Difficulty.Hard;
+                break;
+            case 500:
+                player1.Difficulty = Difficulty.Medium;
+                player2.Difficulty = Difficulty.Hard;
+                break;
         }
     }
 }
