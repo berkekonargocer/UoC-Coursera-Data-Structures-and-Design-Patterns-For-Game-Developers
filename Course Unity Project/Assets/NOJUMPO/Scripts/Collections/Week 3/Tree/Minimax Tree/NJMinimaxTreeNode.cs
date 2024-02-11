@@ -24,7 +24,7 @@ namespace NOJUMPO.Collections
             _value = value;
             _parent = parent;
             _children = new List<NJMinimaxTreeNode<T>>();
-        }
+        }        
 
 
         // ------------------------- CUSTOM PUBLIC METHODS -------------------------
