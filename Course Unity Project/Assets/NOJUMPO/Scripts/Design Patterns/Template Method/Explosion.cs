@@ -16,7 +16,6 @@ public class Explosion : MonoBehaviour
     void Start()
     {		
 		anim = GetComponent<Animator>();
-        AudioManager.Play(AudioClipName.Explosion);
 	}
 
     /// <summary>
