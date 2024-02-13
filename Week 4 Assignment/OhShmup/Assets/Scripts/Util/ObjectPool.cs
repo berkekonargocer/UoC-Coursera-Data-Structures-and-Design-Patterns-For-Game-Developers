@@ -56,8 +56,16 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
             new List<GameObject>(GameConstants.InitialEnemyPoolCapacity));
 
         // fill bullet pool
+        for (int i = 0; i < pools[PooledObjectName.Bullet].Capacity; i++)
+        {
+            pools[PooledObjectName.Bullet].Add(GetBullet());
+        }
 
         // fill enemy pool
+        for (int i = 0; i < pools[PooledObjectName.Enemy].Capacity; i++)
+        {
+            pools[PooledObjectName.Enemy].Add(GetEnemy());
+        }
 
     }
 
