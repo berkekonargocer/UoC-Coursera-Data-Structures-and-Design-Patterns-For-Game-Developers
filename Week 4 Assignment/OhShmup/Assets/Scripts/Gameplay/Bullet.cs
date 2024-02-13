@@ -67,7 +67,7 @@ public class Bullet : MonoBehaviour
     public void StartMoving(BulletDirection direction)
     {
         // apply impulse force to get projectile moving
-
+        rb2d.AddForce(forceVector, ForceMode2D.Impulse);
     }
 
     /// <summary>
