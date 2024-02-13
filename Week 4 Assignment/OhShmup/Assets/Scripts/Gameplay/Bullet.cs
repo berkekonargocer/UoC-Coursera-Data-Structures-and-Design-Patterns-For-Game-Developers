@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour
     void OnBecameInvisible()
     {
         // return to the pool
-
+        ObjectPool.ReturnBullet(gameObject);
     }
 
     /// <summary>
