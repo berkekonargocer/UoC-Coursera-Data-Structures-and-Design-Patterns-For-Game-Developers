@@ -113,6 +113,9 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// <param name="bullet">bullet</param>
     public static void ReturnBullet(GameObject bullet) {
         // add your code here
+        bullet.SetActive(false);
+        bullet.GetComponent<Bullet>().StopMoving();
+        pools[PooledObjectName.Bullet].Add(bullet);
     }
 
     /// <summary>
