@@ -58,13 +58,13 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
         // fill bullet pool
         for (int i = 0; i < pools[PooledObjectName.Bullet].Capacity; i++)
         {
-            pools[PooledObjectName.Bullet].Add(GetBullet());
+            pools[PooledObjectName.Bullet].Add(GetNewObject(PooledObjectName.Bullet));
         }
 
         // fill enemy pool
         for (int i = 0; i < pools[PooledObjectName.Enemy].Capacity; i++)
         {
-            pools[PooledObjectName.Enemy].Add(GetEnemy());
+            pools[PooledObjectName.Enemy].Add(GetNewObject(PooledObjectName.Enemy));
         }
 
     }
@@ -75,7 +75,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// <returns>bullet</returns>
     public static GameObject GetBullet()
     {
-        // replace code below with correct code
+        
         return null;
     }
 
