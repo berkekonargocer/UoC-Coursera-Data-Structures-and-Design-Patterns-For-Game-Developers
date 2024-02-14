@@ -134,8 +134,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <param name="name">name of pooled object</param>
     /// <param name="obj">object to return to pool</param>
-    public static void ReturnPooledObject(PooledObjectName name,
-        GameObject obj) {
+    public static void ReturnPooledObject(PooledObjectName name, GameObject obj) {
         // add your code here
         switch (name)
         {
@@ -178,6 +177,10 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     public static void EmptyPools() {
         // add your code here
+        foreach (KeyValuePair<PooledObjectName, List<GameObject>> keyValuePair in pools)
+        {
+            pools[keyValuePair.Key].Clear();
+        }
     }
 
     #region Methods to support autograder
