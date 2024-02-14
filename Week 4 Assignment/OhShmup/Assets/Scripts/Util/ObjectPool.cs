@@ -137,7 +137,17 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     public static void ReturnPooledObject(PooledObjectName name,
         GameObject obj) {
         // add your code here
-
+        switch (name)
+        {
+            case PooledObjectName.Bullet:
+                ReturnBullet(obj);
+                break;
+            case PooledObjectName.Enemy:
+                ReturnEnemy(obj);
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
