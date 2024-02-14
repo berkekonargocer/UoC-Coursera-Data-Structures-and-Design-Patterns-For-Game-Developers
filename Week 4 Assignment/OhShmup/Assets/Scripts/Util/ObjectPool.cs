@@ -124,6 +124,9 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// <param name="enemy">enemy</param>
     public static void ReturnEnemy(GameObject enemy) {
         // add your code here
+        enemy.SetActive(false);
+        enemy.GetComponent<Enemy>().Deactivate();
+        pools[PooledObjectName.Enemy].Add(enemy);
     }
 
     /// <summary>
