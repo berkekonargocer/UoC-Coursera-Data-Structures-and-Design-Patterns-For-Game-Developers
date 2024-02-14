@@ -25,8 +25,7 @@ public class Bullet : MonoBehaviour
     /// </summary>
     /// <param name="gameObject">the game object the script is attached to</param>
     public Bullet(GameObject gameObject) :
-        base(gameObject)
-    {
+        base(gameObject) {
     }
 
     #endregion
@@ -51,10 +50,12 @@ public class Bullet : MonoBehaviour
     public void Initialize()
     {       
         // save Rigidbody2D for efficiency
+        rb2d = GetComponent<Rigidbody2D>();
 
         // set force vector
         // Caution: you MUST use the bullet impulse force from
         // GameConstants
+        forceVector = new Vector2(GameConstants.BulletImpulseForce, 0);
 
     }
 
@@ -65,7 +66,16 @@ public class Bullet : MonoBehaviour
     public void StartMoving(BulletDirection direction)
     {
         // apply impulse force to get projectile moving
+        if (direction == BulletDirection.Left)
+        {
+            forceVector.x = -GameConstants.BulletImpulseForce;
+        }
+        else
+        {
+            forceVector.x = GameConstants.BulletImpulseForce;
+        }
 
+        rb2d.AddForce(forceVector, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -103,7 +113,7 @@ public class Bullet : MonoBehaviour
     void OnBecameInvisible()
     {
         // return to the pool
-
+        ObjectPool.ReturnBullet(gameObject);
     }
 
     /// <summary>

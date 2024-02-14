@@ -30,8 +30,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <param name="gameObject">the game object the script is attached to</param>
     public ObjectPool(GameObject gameObject) :
-        base(gameObject)
-    {
+        base(gameObject) {
         EventManager.AddBulletCreatedInvoker(this);
         EventManager.AddEnemyCreatedInvoker(this);
     }
@@ -41,8 +40,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// <summary>
     /// Initializes the pools
     /// </summary>
-    public static void Initialize()
-    {
+    public static void Initialize() {
         // load prefabs
         // Caution: Don't change the location of the prefabs in the Resources folder
         prefabBullet = Resources.Load<GameObject>("Bullet");
@@ -56,29 +54,32 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
             new List<GameObject>(GameConstants.InitialEnemyPoolCapacity));
 
         // fill bullet pool
+        for (int i = 0; i < pools[PooledObjectName.Bullet].Capacity; i++)
+        {
+            pools[PooledObjectName.Bullet].Add(GetNewObject(PooledObjectName.Bullet));
+        }
 
         // fill enemy pool
-
+        for (int i = 0; i < pools[PooledObjectName.Enemy].Capacity; i++)
+        {
+            pools[PooledObjectName.Enemy].Add(GetNewObject(PooledObjectName.Enemy));
+        }
     }
 
     /// <summary>
     /// Gets a bullet object from the pool
     /// </summary>
     /// <returns>bullet</returns>
-    public static GameObject GetBullet()
-    {
-        // replace code below with correct code
-        return null;
+    public static GameObject GetBullet() {
+        return GetPooledObject(PooledObjectName.Bullet);
     }
 
     /// <summary>
     /// Gets an enemy object from the pool
     /// </summary>
     /// <returns>enemy</returns>
-    public static GameObject GetEnemy()
-    {
-        // replace code below with correct code
-        return null;
+    public static GameObject GetEnemy() {
+        return GetPooledObject(PooledObjectName.Enemy);
     }
 
     /// <summary>
@@ -86,20 +87,22 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <returns>pooled object</returns>
     /// <param name="name">name of the pooled object to get</param>
-    static GameObject GetPooledObject(PooledObjectName name)
-    {
+    static GameObject GetPooledObject(PooledObjectName name) {
         List<GameObject> pool = pools[name];
 
         // check for available object in pool
         if (pool.Count > 0)
         {
             // remove object from pool and return (replace code below)
-            return null;
+            GameObject pooledObject = pool[pool.Count - 1];
+            pool.RemoveAt(pool.Count - 1);
+            return pooledObject;
         }
         else
         {
             // pool empty, so expand pool and return new object (replace code below)
-            return null;
+            pool.Capacity++;
+            return GetNewObject(name);
         }
     }
 
@@ -107,18 +110,22 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// Returns a bullet object to the pool
     /// </summary>
     /// <param name="bullet">bullet</param>
-    public static void ReturnBullet(GameObject bullet)
-    {
+    public static void ReturnBullet(GameObject bullet) {
         // add your code here
+        bullet.SetActive(false);
+        bullet.GetComponent<Bullet>().StopMoving();
+        pools[PooledObjectName.Bullet].Add(bullet);
     }
 
     /// <summary>
     /// Returns an enemy object to the pool
     /// </summary>
     /// <param name="enemy">enemy</param>
-    public static void ReturnEnemy(GameObject enemy)
-    {
+    public static void ReturnEnemy(GameObject enemy) {
         // add your code here
+        enemy.SetActive(false);
+        enemy.GetComponent<Enemy>().Deactivate();
+        pools[PooledObjectName.Enemy].Add(enemy);
     }
 
     /// <summary>
@@ -126,19 +133,26 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <param name="name">name of pooled object</param>
     /// <param name="obj">object to return to pool</param>
-    public static void ReturnPooledObject(PooledObjectName name,
-        GameObject obj)
-    {
+    public static void ReturnPooledObject(PooledObjectName name, GameObject obj) {
         // add your code here
-
+        switch (name)
+        {
+            case PooledObjectName.Bullet:
+                ReturnBullet(obj);
+                break;
+            case PooledObjectName.Enemy:
+                ReturnEnemy(obj);
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
     /// Gets a new object
     /// </summary>
     /// <returns>new object</returns>
-    static GameObject GetNewObject(PooledObjectName name)
-    {
+    static GameObject GetNewObject(PooledObjectName name) {
         GameObject obj;
         if (name == PooledObjectName.Bullet)
         {
@@ -160,9 +174,12 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// <summary>
     /// Removes all the pooled objects from the object pools
     /// </summary>
-    public static void EmptyPools()
-    {
+    public static void EmptyPools() {
         // add your code here
+        foreach (KeyValuePair<PooledObjectName, List<GameObject>> keyValuePair in pools)
+        {
+            pools[keyValuePair.Key].Clear();
+        }
     }
 
     #region Methods to support autograder
@@ -171,8 +188,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// Adds the given listener for the BulletCreated event
     /// </summary>
     /// <param name="listener">listener</param>
-    public void AddBulletCreatedListener(UnityAction<GameObject> listener)
-    {
+    public void AddBulletCreatedListener(UnityAction<GameObject> listener) {
         bulletCreated.AddListener(listener);
     }
 
@@ -180,8 +196,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// Adds the given listener for the EnemyCreated event
     /// </summary>
     /// <param name="listener">listener</param>
-    public void AddEnemyCreatedListener(UnityAction<GameObject> listener)
-    {
+    public void AddEnemyCreatedListener(UnityAction<GameObject> listener) {
         enemyCreated.AddListener(listener);
     }
 
@@ -190,8 +205,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <param name="name">pooled object name</param>
     /// <returns>current pool count</returns>
-    public int GetPoolCount(PooledObjectName name)
-    {
+    public int GetPoolCount(PooledObjectName name) {
         if (pools.ContainsKey(name))
         {
             return pools[name].Count;
@@ -208,8 +222,7 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
     /// </summary>
     /// <param name="name">pooled object name</param>
     /// <returns>current pool capacity</returns>
-    public int GetPoolCapacity(PooledObjectName name)
-    {
+    public int GetPoolCapacity(PooledObjectName name) {
         if (pools.ContainsKey(name))
         {
             return pools[name].Capacity;

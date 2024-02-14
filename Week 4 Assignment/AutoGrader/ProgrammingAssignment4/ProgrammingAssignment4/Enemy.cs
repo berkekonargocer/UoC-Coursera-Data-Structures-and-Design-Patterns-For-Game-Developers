@@ -27,8 +27,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     /// <param name="gameObject">the game object the script is attached to</param>
     public Enemy(GameObject gameObject) :
-        base(gameObject)
-    {
+        base(gameObject) {
     }
 
     #endregion
@@ -53,13 +52,17 @@ public class Enemy : MonoBehaviour
     public void Initialize()
     {       
         // save Rigidbody2D for efficiency
-
+        rb2d = GetComponent<Rigidbody2D>();
+        
         // set force vector
         // Caution: you MUST use the enemy impulse force from
         // GameConstants
+        forceVector = new Vector2(GameConstants.EnemyImpulseForce, 0);
 
         // set up shoot timer
-
+        shootTimer = gameObject.AddComponent<Timer>();
+        shootTimer.Duration = GameConstants.EnemyShootDelaySeconds;
+        shootTimer.AddTimerFinishedListener(HandleShootTimerFinished);
     }
 
     /// <summary>
@@ -68,7 +71,7 @@ public class Enemy : MonoBehaviour
     public void Activate()
     {
         // apply impulse force to get enemy moving
-
+        rb2d.AddForce(forceVector, ForceMode2D.Impulse);
         shootTimer.Run();
     }
 
@@ -102,6 +105,13 @@ public class Enemy : MonoBehaviour
         shootTimer.Run();
 
         // shoot bullet
+        Vector3 bulletPosition = transform.position;
+        bulletPosition.x += GameConstants.EnemyBulletXOffset;
+        bulletPosition.y += GameConstants.EnemyBulletYOffset;
+        GameObject bullet = ObjectPool.GetBullet();
+        bullet.transform.position = bulletPosition;
+        bullet.SetActive(true);
+        bullet.GetComponent<Bullet>().StartMoving(BulletDirection.Left);
 
     }
 }
