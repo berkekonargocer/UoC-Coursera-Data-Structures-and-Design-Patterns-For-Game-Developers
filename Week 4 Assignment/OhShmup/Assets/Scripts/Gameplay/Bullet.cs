@@ -56,7 +56,7 @@ public class Bullet : MonoBehaviour
         // set force vector
         // Caution: you MUST use the bullet impulse force from
         // GameConstants
-        forceVector = Vector2.right * GameConstants.BulletImpulseForce;
+        forceVector = new Vector2(GameConstants.BulletImpulseForce, 0);
 
     }
 
@@ -67,6 +67,15 @@ public class Bullet : MonoBehaviour
     public void StartMoving(BulletDirection direction)
     {
         // apply impulse force to get projectile moving
+        if (direction == BulletDirection.Left)
+        {
+            forceVector.x = -GameConstants.BulletImpulseForce;
+        }
+        else
+        {
+            forceVector.x = GameConstants.BulletImpulseForce;
+        }
+
         rb2d.AddForce(forceVector, ForceMode2D.Impulse);
     }
 

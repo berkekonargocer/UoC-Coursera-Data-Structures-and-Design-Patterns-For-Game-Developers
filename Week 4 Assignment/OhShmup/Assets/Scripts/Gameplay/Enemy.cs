@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         // set force vector
         // Caution: you MUST use the enemy impulse force from
         // GameConstants
-        forceVector = Vector2.left * GameConstants.EnemyImpulseForce;
+        forceVector = new Vector2(GameConstants.EnemyImpulseForce, 0);
 
         // set up shoot timer
         shootTimer = gameObject.AddComponent<Timer>();
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
     public void Activate()
     {
         // apply impulse force to get enemy moving
-        rb2d.AddForce(forceVector);
+        rb2d.AddForce(forceVector, ForceMode2D.Impulse);
         shootTimer.Run();
     }
 
@@ -107,8 +107,8 @@ public class Enemy : MonoBehaviour
 
         // shoot bullet
         Vector2 bulletPosition = transform.position;
-        bulletPosition.x = GameConstants.EnemyBulletXOffset;
-        bulletPosition.y = GameConstants.EnemyBulletYOffset;
+        bulletPosition.x += GameConstants.EnemyBulletXOffset;
+        bulletPosition.y += GameConstants.EnemyBulletYOffset;
         GameObject bullet = ObjectPool.GetBullet();
         bullet.transform.position = bulletPosition;
         bullet.SetActive(true);

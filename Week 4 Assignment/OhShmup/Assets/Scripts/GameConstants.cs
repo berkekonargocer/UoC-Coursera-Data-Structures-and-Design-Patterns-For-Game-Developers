@@ -18,7 +18,7 @@ public static class GameConstants
 
     // enemies
     public const float EnemyImpulseForce = -3f;
-    public const float EnemyBulletXOffset = -0.5f;
+    public const float EnemyBulletXOffset = -0.75f;
     public const float EnemyBulletYOffset = 0.04f;
     public const float EnemyShootDelaySeconds = 0.5f;
 
