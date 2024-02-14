@@ -95,9 +95,9 @@ public class ObjectPool : MonoBehaviour, IBulletCreatedInvoker, IEnemyCreatedInv
         if (pool.Count > 0)
         {
             // remove object from pool and return (replace code below)
-            GameObject bullet = pool[pool.Count - 1];
+            GameObject pooledObject = pool[pool.Count - 1];
             pool.RemoveAt(pool.Count - 1);
-            return bullet;
+            return pooledObject;
         }
         else
         {
